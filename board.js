@@ -23,6 +23,9 @@ class Board {
         this.x3 = x - width + this.heightOffset;
         this.y3 = y + this.heightOffset + layerOffset;
 
+        this.radiusCos0; this.radiusSin0;
+        this.radiusCos1; this.radiusSin1;
+
         this._PI = Math.PI;
         this._halfPI = this._PI / 2;
     }
@@ -48,17 +51,57 @@ class Board {
     }
 
     motionPersist() {
-        this.x0 = this.x + this.width * Math.cos(this.angle);
-        this.y0 = this.y + this.height * Math.sin(this.angle);
+        this.radiusCos0 = this.width * Math.cos(this.angle);
+        this.radiusSin0 = this.height * Math.sin(this.angle);
+        this.radiusCos1 = this.width * Math.cos(this.angle + this._halfPI);
+        this.radiusSin1 = this.height * Math.sin(this.angle + this._halfPI);
 
-        this.x1 = this.x + this.width * Math.cos(this.angle + this._halfPI);
-        this.y1 = this.y + this.height * Math.sin(this.angle + this._halfPI);
+        this.x0 = this.x + this.radiusCos0;
+        this.y0 = this.y + this.radiusSin0;
 
-        this.x2 = this.x + this.width * Math.cos(this.angle + this._PI);
-        this.y2 = this.y + this.height * Math.sin(this.angle + this._PI);
+        this.x1 = this.x + this.radiusCos1;
+        this.y1 = this.y + this.radiusSin1;
 
-        this.x3 = this.x + this.width * Math.cos(this.angle - this._halfPI);
-        this.y3 = this.y + this.height * Math.sin(this.angle - this._halfPI);
+        this.x2 = this.x - this.radiusCos0;
+        this.y2 = this.y - this.radiusSin0;
+
+        this.x3 = this.x - this.radiusCos1;
+        this.y3 = this.y - this.radiusSin1;
+    }
+
+    attach(grids) {
+        let { grid0, grid1, grid2, grid3, grid4, grid5, grid6, grid7 } = grids;
+        // diagonals
+        grid0.x = this.x + this.radiusCos0 * 2;
+        grid0.y = this.y + this.radiusSin0 * 2;
+
+        grid1.x = this.x + this.radiusCos1 * 2;
+        grid1.y = this.y + this.radiusSin1 * 2;
+
+        grid2.x = this.x - this.radiusCos0 * 2;
+        grid2.y = this.y - this.radiusSin0 * 2;
+
+        grid3.x = this.x - this.radiusCos1 * 2;
+        grid3.y = this.y - this.radiusSin1 * 2;
+
+        // straight
+        const radiusCos2 = this.width * Math.cos(this._PI / 4) * Math.cos(this.angle + this._PI / 4);
+        const radiusSin2 = this.height * Math.cos(this._PI / 4) * Math.sin(this.angle + this._PI / 4);
+
+        const radiusCos3 = this.width * Math.cos(this._PI / 4) * Math.cos(this.angle - this._PI / 4);
+        const radiusSin3 = this.height * Math.cos(this._PI / 4) * Math.sin(this.angle - this._PI / 4);
+
+        grid4.x = this.x + radiusCos2 * 2;
+        grid4.y = this.y + radiusSin2 * 2;
+
+        grid5.x = this.x + radiusCos3 * 2;
+        grid5.y = this.y + radiusSin3 * 2;
+
+        grid6.x = this.x - radiusCos2 * 2;
+        grid6.y = this.y - radiusSin2 * 2;
+
+        grid7.x = this.x - radiusCos3 * 2;
+        grid7.y = this.y - radiusSin3 * 2;
     }
 
     motionPersistClone(vertexes) {
@@ -85,10 +128,6 @@ class Board {
             x3: this.x3, y3: this.y3
         };
     }
-
-    // drawLine(ctx) {
-    //     ctx.beginPath();
-    // }
 
     renderCenter(ctx) {
         ctx.beginPath();
