@@ -1,5 +1,6 @@
 class Grid {
-    constructor(x, y, width, height, outlineColor, layerOffset, horVel=0.02, verVel=1, clone=false) {
+    constructor(id, x, y, width, height, outlineColor, layerOffset, horVel=0.02, verVel=1, clone=false) {
+        this.id = id;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -71,19 +72,19 @@ class Grid {
     }
 
     attach(grids) {
-        let { grid0, grid1, grid2, grid3, grid4, grid5, grid6, grid7 } = grids;
+        let { grid0, grid1, grid2, grid3, grid5, grid6, grid7, grid8 } = grids;
         // diagonals
         grid0.x = this.x + this.radiusCos0 * 2;
         grid0.y = this.y + this.radiusSin0 * 2;
 
-        grid1.x = this.x + this.radiusCos1 * 2;
-        grid1.y = this.y + this.radiusSin1 * 2;
+        grid2.x = this.x + this.radiusCos1 * 2;
+        grid2.y = this.y + this.radiusSin1 * 2;
 
-        grid2.x = this.x - this.radiusCos0 * 2;
-        grid2.y = this.y - this.radiusSin0 * 2;
+        grid8.x = this.x - this.radiusCos0 * 2;
+        grid8.y = this.y - this.radiusSin0 * 2;
 
-        grid3.x = this.x - this.radiusCos1 * 2;
-        grid3.y = this.y - this.radiusSin1 * 2;
+        grid6.x = this.x - this.radiusCos1 * 2;
+        grid6.y = this.y - this.radiusSin1 * 2;
 
         // straight
         const straightRadius = Math.cos(this._deg45);
@@ -97,22 +98,24 @@ class Grid {
         const radiusCos3 = this.width * strtRM;
         const radiusSin3 = this.height * -strtRP;
 
-        grid4.x = this.x + radiusCos2 * 2;
-        grid4.y = this.y + radiusSin2 * 2;
+        grid1.x = this.x + radiusCos2 * 2;
+        grid1.y = this.y + radiusSin2 * 2;
 
-        grid5.x = this.x + radiusCos3 * 2;
-        grid5.y = this.y + radiusSin3 * 2;
+        grid3.x = this.x + radiusCos3 * 2;
+        grid3.y = this.y + radiusSin3 * 2;
 
-        grid6.x = this.x - radiusCos2 * 2;
-        grid6.y = this.y - radiusSin2 * 2;
+        grid7.x = this.x - radiusCos2 * 2;
+        grid7.y = this.y - radiusSin2 * 2;
 
-        grid7.x = this.x - radiusCos3 * 2;
-        grid7.y = this.y - radiusSin3 * 2;
+        grid5.x = this.x - radiusCos3 * 2;
+        grid5.y = this.y - radiusSin3 * 2;
     }
 
     motionPersistClone(vertexes) {
-        const { x0, y0, x1, y1, x2, y2, x3, y3 } = vertexes;
+        const { x, y, x0, y0, x1, y1, x2, y2, x3, y3 } = vertexes;
         
+        this.x = x;
+        this.y = y + this.layerOffset;
         this.x0 = x0;
         this.y0 = y0 + this.layerOffset;
 
@@ -128,6 +131,7 @@ class Grid {
 
     getVertexes() {
         return {
+            x: this.x, y: this.y,
             x0: this.x0, y0: this.y0,
             x1: this.x1, y1: this.y1,
             x2: this.x2, y2: this.y2,
@@ -152,10 +156,18 @@ class Grid {
         ctx.stroke();
     }
 
+    renderId(ctx) {
+        ctx.font = '10px Arial';
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'center';
+        ctx.fillText(this.id, this.x, this.y);
+    }
+
     run(ctx, key) {
         this.verticalRotate(key);
         this.horizontalRotate(key);
         // this.renderCenter(ctx);
+        this.renderId(ctx);
         this.render(ctx);
     }
 }
