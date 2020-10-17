@@ -1,4 +1,4 @@
-class Board {
+class Grid {
     constructor(x, y, width, height, outlineColor, layerOffset, horVel=0.02, verVel=1, clone=false) {
         this.x = x;
         this.y = y;
@@ -27,7 +27,8 @@ class Board {
         this.radiusCos1; this.radiusSin1;
 
         this._PI = Math.PI;
-        this._halfPI = this._PI / 2;
+        this._deg90 = this._PI / 2;
+        this._deg45 = this._deg90 / 2;
     }
 
     verticalRotate(key) {
@@ -53,8 +54,8 @@ class Board {
     motionPersist() {
         this.radiusCos0 = this.width * Math.cos(this.angle);
         this.radiusSin0 = this.height * Math.sin(this.angle);
-        this.radiusCos1 = this.width * Math.cos(this.angle + this._halfPI);
-        this.radiusSin1 = this.height * Math.sin(this.angle + this._halfPI);
+        this.radiusCos1 = this.width * Math.cos(this.angle + this._deg90);
+        this.radiusSin1 = this.height * Math.sin(this.angle + this._deg90);
 
         this.x0 = this.x + this.radiusCos0;
         this.y0 = this.y + this.radiusSin0;
@@ -85,11 +86,16 @@ class Board {
         grid3.y = this.y - this.radiusSin1 * 2;
 
         // straight
-        const radiusCos2 = this.width * Math.cos(this._PI / 4) * Math.cos(this.angle + this._PI / 4);
-        const radiusSin2 = this.height * Math.cos(this._PI / 4) * Math.sin(this.angle + this._PI / 4);
+        const straightRadius = Math.cos(this._deg45);
+        const strtRP = straightRadius * Math.cos(this.angle + this._deg45);
+        const strtRM = straightRadius * Math.cos(this.angle - this._deg45);
 
-        const radiusCos3 = this.width * Math.cos(this._PI / 4) * Math.cos(this.angle - this._PI / 4);
-        const radiusSin3 = this.height * Math.cos(this._PI / 4) * Math.sin(this.angle - this._PI / 4);
+        // cos(x-45) = sin(x+45)
+        // cos(x+45) = -sin(x-45)
+        const radiusCos2 = this.width * strtRP;
+        const radiusSin2 = this.height * strtRM;
+        const radiusCos3 = this.width * strtRM;
+        const radiusSin3 = this.height * -strtRP;
 
         grid4.x = this.x + radiusCos2 * 2;
         grid4.y = this.y + radiusSin2 * 2;
@@ -149,7 +155,7 @@ class Board {
     run(ctx, key) {
         this.verticalRotate(key);
         this.horizontalRotate(key);
-        this.renderCenter(ctx);
+        // this.renderCenter(ctx);
         this.render(ctx);
     }
 }
