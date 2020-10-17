@@ -22,19 +22,20 @@ window.addEventListener('keyup', e => {
 });
 
 
-
+const w = 100;
+const h = 10;
 let dist = 200;
-let layer1 = new Board(300, 200, 100, 50, 'rgb(255, 255, 255)', 50);
-let layer2 = new Board(300, 200 + dist, 100, 50, 'rgb(255, 255, 255)', dist);
-let layer3 = new Board(300, 200 + dist * 2, 100, 50, 'rgb(255, 255, 255)', dist * 2);
-let grid0 = new Board(500, 200, 100, 50, 'rgb(255, 255, 255)', 50);
-let grid1 = new Board(500, 200, 100, 50, 'rgb(255, 255, 255)', 50);
-let grid2 = new Board(500, 200, 100, 50, 'rgb(255, 255, 255)', 50);
-let grid3 = new Board(500, 200, 100, 50, 'rgb(255, 255, 255)', 50);
-let grid4 = new Board(500, 200, 100, 50, 'rgb(255, 255, 255)', 50);
-let grid5 = new Board(500, 200, 100, 50, 'rgb(255, 255, 255)', 50);
-let grid6 = new Board(500, 200, 100, 50, 'rgb(255, 255, 255)', 50);
-let grid7 = new Board(500, 200, 100, 50, 'rgb(255, 255, 255)', 50);
+let layer1 = new Board(300, 200, w, h, 'rgb(255, 255, 255)', 50);
+let layer2 = new Board(300, 200 + dist, w, h, 'rgb(255, 255, 255)', dist);
+let layer3 = new Board(300, 200 + dist * 2, w, h, 'rgb(255, 255, 255)', dist * 2);
+let grid0 = new Board(500, 200, w, h, 'rgb(255, 255, 255)', 50);
+let grid1 = new Board(500, 200, w, h, 'rgb(255, 255, 255)', 50);
+let grid2 = new Board(500, 200, w, h, 'rgb(255, 255, 255)', 50);
+let grid3 = new Board(500, 200, w, h, 'rgb(255, 255, 255)', 50);
+let grid4 = new Board(500, 200, w, h, 'rgb(255, 255, 255)', 50);
+let grid5 = new Board(500, 200, w, h, 'rgb(255, 255, 255)', 50);
+let grid6 = new Board(500, 200, w, h, 'rgb(255, 255, 255)', 50);
+let grid7 = new Board(500, 200, w, h, 'rgb(255, 255, 255)', 50);
 
 
 function main() {
