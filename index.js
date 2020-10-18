@@ -91,12 +91,10 @@ function main() {
 
     if (winner) {
         renderGameOver(ctx, winner);
-    } else {
-        interact(ctx, grids);
-        keyboardControl(ctx, keypressed);
     }
     renderBoards(ctx, keypressed);
-    
+    interact(ctx, grids);
+    keyboardControl(ctx, keypressed);
 }
 
 main();
