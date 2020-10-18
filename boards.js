@@ -1,36 +1,36 @@
 const w = 100;
 const h = 10;
 let dist = 200;
+const white = 'rgb(255, 255, 255)';
+let grid0 = new Grid(0, 500, 200, w, h, white);
+let grid1 = new Grid(1, 500, 200, w, h, white);
+let grid2 = new Grid(2, 500, 200, w, h, white);
+let grid3 = new Grid(3, 500, 200, w, h, white);
+let grid4 = new Grid(4, 700, 200, w, h, white); // center
+let grid5 = new Grid(5, 500, 200, w, h, white);
+let grid6 = new Grid(6, 500, 200, w, h, white);
+let grid7 = new Grid(7, 500, 200, w, h, white);
+let grid8 = new Grid(8, 500, 200, w, h, white);
 
-let grid0 = new Grid(0, 500, 200, w, h, 'rgb(255, 255, 255)');
-let grid1 = new Grid(1, 500, 200, w, h, 'rgb(255, 255, 255)');
-let grid2 = new Grid(2, 500, 200, w, h, 'rgb(255, 255, 255)');
-let grid3 = new Grid(3, 500, 200, w, h, 'rgb(255, 255, 255)');
-let grid4 = new Grid(4, 700, 200, w, h, 'rgb(255, 255, 255)'); // center
-let grid5 = new Grid(5, 500, 200, w, h, 'rgb(255, 255, 255)');
-let grid6 = new Grid(6, 500, 200, w, h, 'rgb(255, 255, 255)');
-let grid7 = new Grid(7, 500, 200, w, h, 'rgb(255, 255, 255)');
-let grid8 = new Grid(8, 500, 200, w, h, 'rgb(255, 255, 255)');
+let grid9 = new Grid(9, 500, 200 + dist, w, h, white, dist);
+let grid10 = new Grid(10, 500, 200 + dist, w, h, white, dist);
+let grid11 = new Grid(11, 500, 200 + dist, w, h, white, dist);
+let grid12 = new Grid(12, 500, 200 + dist, w, h, white, dist);
+let grid13 = new Grid(13, 500, 200 + dist, w, h, white, dist); // center
+let grid14 = new Grid(14, 500, 200 + dist, w, h, white, dist);
+let grid15 = new Grid(15, 500, 200 + dist, w, h, white, dist);
+let grid16 = new Grid(16, 500, 200 + dist, w, h, white, dist);
+let grid17 = new Grid(17, 500, 200 + dist, w, h, white, dist);
 
-let grid9 = new Grid(9, 500, 200 + dist, w, h, 'rgb(255, 255, 255)', dist);
-let grid10 = new Grid(10, 500, 200 + dist, w, h, 'rgb(255, 255, 255)', dist);
-let grid11 = new Grid(11, 500, 200 + dist, w, h, 'rgb(255, 255, 255)', dist);
-let grid12 = new Grid(12, 500, 200 + dist, w, h, 'rgb(255, 255, 255)', dist);
-let grid13 = new Grid(13, 500, 200 + dist, w, h, 'rgb(255, 255, 255)', dist); // center
-let grid14 = new Grid(14, 500, 200 + dist, w, h, 'rgb(255, 255, 255)', dist);
-let grid15 = new Grid(15, 500, 200 + dist, w, h, 'rgb(255, 255, 255)', dist);
-let grid16 = new Grid(16, 500, 200 + dist, w, h, 'rgb(255, 255, 255)', dist);
-let grid17 = new Grid(17, 500, 200 + dist, w, h, 'rgb(255, 255, 255)', dist);
-
-let grid18 = new Grid(18, 300, 200 + dist * 2, w, h, 'rgb(255, 255, 255)', dist * 2);
-let grid19 = new Grid(19, 300, 200 + dist * 2, w, h, 'rgb(255, 255, 255)', dist * 2);
-let grid20 = new Grid(20, 300, 200 + dist * 2, w, h, 'rgb(255, 255, 255)', dist * 2);
-let grid21 = new Grid(21, 300, 200 + dist * 2, w, h, 'rgb(255, 255, 255)', dist * 2);
-let grid22 = new Grid(22, 500, 200 + dist * 2, w, h, 'rgb(255, 255, 255)', dist * 2); // center
-let grid23 = new Grid(23, 300, 200 + dist * 2, w, h, 'rgb(255, 255, 255)', dist * 2);
-let grid24 = new Grid(24, 300, 200 + dist * 2, w, h, 'rgb(255, 255, 255)', dist * 2);
-let grid25 = new Grid(25, 300, 200 + dist * 2, w, h, 'rgb(255, 255, 255)', dist * 2);
-let grid26 = new Grid(26, 300, 200 + dist * 2, w, h, 'rgb(255, 255, 255)', dist * 2);
+let grid18 = new Grid(18, 300, 200 + dist * 2, w, h, white, dist * 2);
+let grid19 = new Grid(19, 300, 200 + dist * 2, w, h, white, dist * 2);
+let grid20 = new Grid(20, 300, 200 + dist * 2, w, h, white, dist * 2);
+let grid21 = new Grid(21, 300, 200 + dist * 2, w, h, white, dist * 2);
+let grid22 = new Grid(22, 500, 200 + dist * 2, w, h, white, dist * 2); // center
+let grid23 = new Grid(23, 300, 200 + dist * 2, w, h, white, dist * 2);
+let grid24 = new Grid(24, 300, 200 + dist * 2, w, h, white, dist * 2);
+let grid25 = new Grid(25, 300, 200 + dist * 2, w, h, white, dist * 2);
+let grid26 = new Grid(26, 300, 200 + dist * 2, w, h, white, dist * 2);
 
 let grids = [];
 grids.push(grid0);grids.push(grid1);grids.push(grid2);

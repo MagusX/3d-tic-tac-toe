@@ -32,6 +32,7 @@ class Grid {
         this._deg45 = this._deg90 / 2;
 
         this.selected = false;
+        this.player = '';
         this.opac = 1 - Math.floor(id / 9) / 5;
     }
 
@@ -164,10 +165,10 @@ class Grid {
     }
 
     renderId(ctx) {
-        ctx.font = '10px Arial';
+        ctx.font = '15px Arial';
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
-        ctx.fillText(this.id, this.x, this.y);
+        ctx.fillText(this.player, this.x, this.y);
     }
 
     renderMark(ctx) {

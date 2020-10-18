@@ -11,6 +11,7 @@ let onTarget = false;
 let target = null;
 
 window.addEventListener('keydown', e => {
+    if (winner) return;
     switch (e.key) {
         case 'w':
         case 'ArrowUp':
@@ -41,18 +42,23 @@ window.addEventListener('keydown', e => {
 });
 
 window.addEventListener('keyup', e => {
+    if (winner) return;
     keypressed = '';
 });
 
 canvas.addEventListener('mousemove', e => {
+    if (winner) return;
     mouseX = e.offsetX;
     mouseY = e.offsetY;
 });
 
 canvas.addEventListener('click', e => {
+    if (winner) return;
     if (onTarget) {
         target.selected = true;
+        target.player = playerA ? 0 : 1;
         playerA = !playerA;
+        winner = gameOver(grids);
     }
 });
 
@@ -78,13 +84,19 @@ const keyboardControl = (ctx, key) => {
 }
 
 let playerA = true;
+let winner = null;
 function main() {
     requestAnimationFrame(main);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
+    if (winner) {
+        renderGameOver(ctx, winner);
+    } else {
+        interact(ctx, grids);
+        keyboardControl(ctx, keypressed);
+    }
     renderBoards(ctx, keypressed);
-    interact(ctx, grids);
-    keyboardControl(ctx, keypressed);
+    
 }
 
 main();
