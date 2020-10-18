@@ -62,3 +62,21 @@ const renderBoards = (ctx, key) => {
         grids[i].run(ctx, key, playerA);
     }
 }
+
+const logGrids = () => {
+    let str = '';
+    for (let grid of grids) {
+        if (grid.player === '') {
+            str += '+';
+        } else {
+            str += grid.player.toString();
+        }
+        if ((grid.id + 1) % 9 == 0) {
+            str += '\n\n';
+        }
+        else if ((grid.id + 1) % 3 == 0) {
+            str += '\n';
+        }
+    }
+    console.log(str);
+}

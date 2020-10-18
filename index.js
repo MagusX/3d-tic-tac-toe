@@ -40,7 +40,7 @@ window.addEventListener('keydown', e => {
             break;
     }
 });
-
+ 
 window.addEventListener('keyup', e => {
     if (winner) return;
     keypressed = '';
@@ -58,6 +58,11 @@ canvas.addEventListener('click', e => {
         target.selected = true;
         target.player = playerA ? 0 : 1;
         playerA = !playerA;
+        if (playerA) {
+            AImove(grids);
+        }
+        logGrids();
+
         winner = gameOver(grids);
     }
 });
@@ -83,8 +88,9 @@ const keyboardControl = (ctx, key) => {
     } 
 }
 
-let playerA = true;
+let playerA = true; // AI first
 let winner = null;
+AImove(grids);
 function main() {
     requestAnimationFrame(main);
     ctx.clearRect(0, 0, innerWidth, innerHeight);

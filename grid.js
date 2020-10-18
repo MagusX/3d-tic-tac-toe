@@ -168,7 +168,7 @@ class Grid {
         ctx.font = '15px Arial';
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
-        ctx.fillText(this.player, this.x, this.y);
+        ctx.fillText(this.id, this.x, this.y);
     }
 
     renderMark(ctx) {
