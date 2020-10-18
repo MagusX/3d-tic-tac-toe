@@ -30,6 +30,8 @@ class Grid {
         this._PI = Math.PI;
         this._deg90 = this._PI / 2;
         this._deg45 = this._deg90 / 2;
+
+        this.selected = false;
     }
 
     verticalRotate(key) {
@@ -37,6 +39,9 @@ class Grid {
             this.height -= this.verVel;
         } else if (key === 'down' && this.height <= this.width) {
             this.height += this.verVel;
+        }
+        if (this.height < 0) {
+            this.height = 0;
         }
     }
 
@@ -47,7 +52,8 @@ class Grid {
             this.angle -= this.horVel;
         }
 
-        if (this.angle > 2 * this._PI) {
+        const fullCircle = this._PI + this._PI;
+        if (this.angle > fullCircle || this.angle < -fullCircle) {
             this.angle = 0;
         }
     }
@@ -163,11 +169,29 @@ class Grid {
         ctx.fillText(this.id, this.x, this.y);
     }
 
-    run(ctx, key) {
+    renderMark(ctx) {
+        ctx.beginPath();
+        ctx.fillStyle = this.markColor;
+        ctx.arc(this.x, this.y, this.height / Math.sqrt(2), 0, 2 * this._PI);
+        ctx.fill();
+    }
+
+    renderHover(ctx, playerA) {
+        if (this.selected) return;
+        this.markColor = playerA ? 'rgb(255, 0, 0)' : 'rgb(0, 255, 0)';
+        this.outlineColor = 'rgb(255, 255, 0)';
+        this.renderMark(ctx, playerA);
+    }
+
+    run(ctx, key, playerA) {
         this.verticalRotate(key);
         this.horizontalRotate(key);
         // this.renderCenter(ctx);
-        this.renderId(ctx);
+        // this.renderId(ctx);
         this.render(ctx);
+        this.outlineColor = 'rgb(255, 255, 255)';
+        if (this.selected) {
+            this.renderMark(ctx);
+        }
     }
 }
