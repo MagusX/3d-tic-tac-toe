@@ -56,10 +56,10 @@ canvas.addEventListener('click', e => {
     if (winner) return;
     if (onTarget) {
         target.selected = true;
-        target.player = playerA ? 0 : 1;
+        target.player = 1;
         playerA = !playerA;
         if (playerA) {
-            AImove(grids);
+            AImove();
         }
         logGrids();
 
@@ -90,7 +90,7 @@ const keyboardControl = (ctx, key) => {
 
 let playerA = true; // AI first
 let winner = null;
-AImove(grids);
+AImove();
 function main() {
     requestAnimationFrame(main);
     ctx.clearRect(0, 0, innerWidth, innerHeight);

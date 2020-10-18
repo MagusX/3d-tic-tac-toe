@@ -12,11 +12,11 @@ const gameoverMoves = [
 const posInf = Number.POSITIVE_INFINITY;
 const negInf = Number.NEGATIVE_INFINITY;
 
-const validMoves = grids => {
+const validMoves = board => {
     let moves = [];
     let count = 0;
-    for (let i = 0; i < 27; i++) {
-        if (!grids[i].selected) {
+    for (let i = 0; i < 18; i++) {
+        if (!board[i].selected) {
             moves.push(i);
             count++;
         }
@@ -24,14 +24,12 @@ const validMoves = grids => {
     return { moves, count };
 }
 
-const gameOver = grids => {
-    const { moves, count } = validMoves(grids);
-    if (count === 0) return 'Draw';
+const gameOver = board => {
     for (const move of gameoverMoves) {
         const [ pos1, pos2, pos3 ] = move;
-        const g1 = grids[pos1];
-        const g2 = grids[pos2];
-        const g3 = grids[pos3];
+        const g1 = board[pos1];
+        const g2 = board[pos2];
+        const g3 = board[pos3];
         if (!(g1.selected && g2.selected && g3.selected)) continue;
         const moveSum = g1.player + g2.player + g3.player;
         if (moveSum === 3) { // player 1 wins
@@ -40,60 +38,67 @@ const gameOver = grids => {
             return 'A';
         }
     }
+    const { moves, count } = validMoves(board);
+    if (count === 0) return 'Draw';
+    return null;
 }
 
 const scores = {
-    A: 1,
-    B: -1,
+    A: 10,
+    B: -10,
     Draw: 0
 }
 
 // AI minimax
-const minimax = (grids, depth, isMaximizer) => {
-    const _winner = gameOver(grids);
-    if (_winner) {
+const minimax = (board, depth, isMaximizer) => {
+    const _winner = gameOver(board);
+    if (_winner !== null) {
         return scores[_winner];
     }
 
-    const { moves, count } = validMoves(grids);
+    const { moves, count } = validMoves(board);
     if (isMaximizer) {
-        let maxScore = negInf;
-        for (let move of moves) {
-            grids[move].selected = true;
-            grids[move].player = 0; // AI
-            let score = minimax(grids, depth + 1, false);
-            grids[move].selected = false;
-            grids[move].player = '';
+        let maxScore = -1000;
+        for (const move of moves) {
+            board[move].selected = true;
+            board[move].player = 0; // AI
+            let score = minimax(board, depth + 1, false);
+            board[move].selected = false;
+            board[move].player = '';
             maxScore = score > maxScore ? score : maxScore;
         }
         return maxScore;
     } else {
-        let minScore = posInf;
-        for (let move of moves) {
-            grids[move].selected = true;
-            grids[move].player = 1; // human
-            let score = minimax(grids, depth + 1, true);
-            grids[move].selected = false;
-            grids[move].player = '';
+        let minScore = 1000;
+        for (const move of moves) {
+            board[move].selected = true;
+            board[move].player = 1; // human
+            let score = minimax(board, depth + 1, true);
+            board[move].selected = false;
+            board[move].player = '';
             minScore = score < minScore ? score : minScore;
         }
         return minScore;
     }
 }
 
-const AImove = grids => {
+const AImove = () => {
     const { moves, count } = validMoves(grids);
-    let maxScore = negInf;
+
+    let maxScore = -1000;
     let bestMove;
-    for (let move of moves) {
+    for (const move of moves) {
         grids[move].selected = true;
         grids[move].player = 0;
         let score = minimax(grids, 0, false);
         grids[move].selected = false;
         grids[move].player = '';
-        maxScore = score > maxScore ? score : maxScore;
-        bestMove = move;
+        if (score > maxScore) {
+            maxScore = score;
+            bestMove = move;
+        }
     }
+    // }
     grids[bestMove].selected = true;
     grids[bestMove].player = 0;
     grids[bestMove].markColor = 'rgb(231, 76, 60)';
