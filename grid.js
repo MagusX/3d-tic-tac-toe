@@ -32,6 +32,7 @@ class Grid {
         this._deg45 = this._deg90 / 2;
 
         this.selected = false;
+        this.opac = 1 - Math.floor(id / 9) / 5;
     }
 
     verticalRotate(key) {
@@ -178,8 +179,8 @@ class Grid {
 
     renderHover(ctx, playerA) {
         if (this.selected) return;
-        this.markColor = playerA ? 'rgb(255, 0, 0)' : 'rgb(0, 255, 0)';
-        this.outlineColor = 'rgb(255, 255, 0)';
+        this.markColor = playerA ? `rgba(231, 76, 60, ${this.opac})` : `rgba(52, 152, 219, ${this.opac})`;
+        this.outlineColor = '#32ff7e';
         this.renderMark(ctx, playerA);
     }
 
