@@ -56,7 +56,7 @@ canvas.addEventListener('click', e => {
     if (winner) return;
     if (onTarget) {
         target.selected = true;
-        target.player = playerA ? 0 : 1;
+        target.player = 1;
         playerA = !playerA;
         if (playerA) {
             AImove(grids);

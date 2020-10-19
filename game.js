@@ -51,7 +51,7 @@ const scores = {
 // AI minimax
 const minimax = (grids, depth, isMaximizer) => {
     const _winner = gameOver(grids);
-    if (_winner) {
+    if (_winner || depth === 4) {
         return scores[_winner];
     }
 
@@ -84,15 +84,17 @@ const minimax = (grids, depth, isMaximizer) => {
 const AImove = grids => {
     const { moves, count } = validMoves(grids);
     let maxScore = negInf;
-    let bestMove;
+    let bestMove = 0;
     for (let move of moves) {
         grids[move].selected = true;
         grids[move].player = 0;
         let score = minimax(grids, 0, false);
         grids[move].selected = false;
         grids[move].player = '';
-        maxScore = score > maxScore ? score : maxScore;
-        bestMove = move;
+        if (score > maxScore) {
+            maxScore = score;
+            bestMove = move;
+        }
     }
     grids[bestMove].selected = true;
     grids[bestMove].player = 0;
