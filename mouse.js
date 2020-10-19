@@ -1,3 +1,7 @@
+/*
+Mouse interaction
+*/
+
 const distance = (mX, mY, gridX, gridY) => {
     const a = mX - gridX;
     const b = mY - gridY;

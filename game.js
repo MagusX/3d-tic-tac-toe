@@ -1,3 +1,7 @@
+/*
+Tic tac toe logic, AI
+*/
+
 const gameoverMoves = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11], [12, 13, 14], [15, 16, 17], [18, 19, 20],
     [21, 22, 23], [24, 25, 26], [0, 3, 6], [1, 4, 7], [2, 5, 8], [9, 12, 15], [8, 13, 18],
@@ -48,10 +52,10 @@ const scores = {
     Draw: 0
 }
 
-const intelligence = 4;
+const intelligence = 6;
 
 // AI minimax
-const minimax = (grids, depth, isMaximizer) => {
+const minimax = (grids, depth, isMaximizer, alpha, beta) => {
     const _winner = gameOver(grids);
     if (_winner || depth === intelligence) {
         return scores[_winner];
@@ -63,10 +67,12 @@ const minimax = (grids, depth, isMaximizer) => {
         for (let move of moves) {
             grids[move].selected = true;
             grids[move].player = 0; // AI
-            let score = minimax(grids, depth + 1, false);
+            let score = minimax(grids, depth + 1, false, alpha, beta);
             grids[move].selected = false;
             grids[move].player = '';
             maxScore = score > maxScore ? score : maxScore;
+            alpha = Math.max(alpha, maxScore);
+            if (beta <= alpha) break;
         }
         return maxScore;
     } else {
@@ -74,10 +80,12 @@ const minimax = (grids, depth, isMaximizer) => {
         for (let move of moves) {
             grids[move].selected = true;
             grids[move].player = 1; // human
-            let score = minimax(grids, depth + 1, true);
+            let score = minimax(grids, depth + 1, true, alpha, beta);
             grids[move].selected = false;
             grids[move].player = '';
             minScore = score < minScore ? score : minScore;
+            beta = Math.min(beta, minScore);
+            if (beta <= alpha) break;
         }
         return minScore;
     }
@@ -90,7 +98,7 @@ const AImove = grids => {
     for (let move of moves) {
         grids[move].selected = true;
         grids[move].player = 0;
-        let score = minimax(grids, 0, false);
+        let score = minimax(grids, 0, false, negInf, posInf);
         grids[move].selected = false;
         grids[move].player = '';
         if (score > maxScore) {

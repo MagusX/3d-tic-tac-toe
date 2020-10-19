@@ -1,3 +1,7 @@
+/*
+Initialize 3D boards
+*/
+
 const w = 100;
 const h = 10;
 let dist = 200;

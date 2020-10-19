@@ -1,3 +1,7 @@
+/*
+Game user interface
+*/
+
 const renderGameOver = (ctx, winner) => {
     ctx.beginPath();
     ctx.font = '30px Arial';

@@ -1,3 +1,7 @@
+/*
+Single 3D grid
+*/
+
 class Grid {
     constructor(id, x, y, width, height, outlineColor, layerOffset, horVel=0.02, verVel=1, clone=false) {
         this.id = id;
