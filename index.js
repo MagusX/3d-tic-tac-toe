@@ -59,13 +59,15 @@ canvas.addEventListener('mousemove', e => {
 canvas.addEventListener('click', e => {
     if (winner) return;
     if (onTarget) {
+        popup = true;
         target.selected = true;
         target.player = 1;
         playerA = !playerA;
-        winner = gameOver(grids);
+        winner = evaluate(grids)._winner;
         if (playerA) {
+            // setTimeout(() => {}, 3000);
             AImove(grids);
-            winner = gameOver(grids);
+            winner = evaluate(grids)._winner;
         }
         logGrids();
 
@@ -80,7 +82,7 @@ const keyboardControl = (ctx, key) => {
         }
     } 
 }
-
+let popup = false;
 let playerA = true; // AI first
 let winner = null;
 AImove(grids);
@@ -88,12 +90,17 @@ function main() {
     requestAnimationFrame(main);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
+    if (popup) {
+        renderAImsg(ctx);
+    }
+
     if (winner) {
         renderGameOver(ctx, winner);
     }
     renderBoards(ctx, keypressed);
     interact(ctx, grids);
     keyboardControl(ctx, keypressed);
+    renderLog(ctx);
 }
 
 main();
