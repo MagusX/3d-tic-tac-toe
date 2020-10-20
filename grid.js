@@ -166,7 +166,7 @@ class Grid {
         ctx.beginPath();
         ctx.font = '15px Arial';
         ctx.fillStyle = 'white';
-        ctx.fillText(this.id, this.x, this.y);
+        ctx.fillText(this.player, this.x, this.y);
         ctx.closePath();
     }
 

@@ -12,21 +12,28 @@ const createText = (ctx, _font, text, color, x, y) => {
     ctx.closePath();
 }
 
-const renderGameOver = (ctx, winner) => {
-    // ctx.beginPath();
-    // ctx.font = titleFont;
-    // ctx.fillStyle = winner === 'A' ? `rgb(231, 76, 60)` : `rgb(52, 152, 219)`;
-    // ctx.fillText(`Player ${winner} wins`, 10, 50);
+const renderGameOver = (ctx, _winner) => {
+    let display;
+    if (_winner === 'draw') {
+        display = 'Game Over: Draw';
+    } else {
+        display = `Game Over: ${players[_winner]} wins!`;
+    }
     createText(
         ctx, titleFont,
-        `${winner} wins`,
-        winner === 'A' ? `rgb(231, 76, 60)` : `rgb(52, 152, 219)`,
+        display,
+        _winner === 'player1' ? `rgb(231, 76, 60)` : `rgb(52, 152, 219)`,
         10, 50
     );
 }
 
 const renderLog = ctx => {
     const start = 500;
+    if (playOption !== 0) {
+        createText(ctx, logFont,
+            `AI level (Minimax depth): ${intelligence}`,
+            white, 10, start);
+    }
     createText(ctx, logFont,
     'Keyboard:',
     white, 10, start + 50);
@@ -39,5 +46,14 @@ const renderLog = ctx => {
     createText(ctx, logFont,
     '[Shift]: grid ID',
     white, 20, start + 110);
-
 }
+
+const renderPlayOption = ctx => {
+    createText(ctx, titleFont,
+        'Human vs Human: Press 0', white, 500, 100);
+    createText(ctx, titleFont,
+        'Human vs AI (AI first): Press 1', white, 500, 150);
+    createText(ctx, titleFont,
+        'Human vs AI (Human first): Press 2', white, 500, 200);
+}
+

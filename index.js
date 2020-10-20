@@ -33,14 +33,19 @@ window.addEventListener('keydown', e => {
         case 'ArrowRight':
             keypressed = 'right';
             break;
-        case 'r':
-            keypressed = 'stretch';
-            break;
-        case 'f':
-            keypressed = 'shrink';
-            break;
         case 'Shift':
             keypressed = 'id';
+            break;
+        case '0':
+            keypressed = '0';
+            break;
+        case '1': {
+            keypressed = '1';
+            alert('AI IS LOADING...');
+            break;
+        }
+        case '2':
+            keypressed = '2';
             break;
     }
 });
@@ -59,10 +64,11 @@ canvas.addEventListener('mousemove', e => {
 canvas.addEventListener('click', e => {
     if (winner) return;
     if (onTarget) {
-        makeMove(target, 1);
-        playerA = !playerA;
+        console.log(playerA);
+        makeMove(target, playerA ? -1 : 1);
         winner = evaluate(grids)._winner;
-        if (playerA) {
+        playerA = !playerA;
+        if ((playOption === 1 || playOption === 2) && playerA) {
             AImove(grids);
             winner = evaluate(grids)._winner;
         }
@@ -77,13 +83,44 @@ const keyboardControl = (ctx, key) => {
         }
     } 
 }
-let popup = false;
+
+let playOption = null;
+// 0: human vs human
+// 1: ai vs human
+// 2: human vs ai
+let players = {
+    player1: 'Player A',
+    player2: 'Player B'
+};
 let playerA = true; // AI first
 let winner = null;
-AImove(grids);
+
+const selectOption = () => {
+    if (keypressed >= '0' && keypressed < '3') {
+        playOption = parseInt(keypressed, 10);
+    }
+    
+    if (playOption && playOption !== 0) {
+        players['player1'] = 'AI';
+        players['player2'] = 'Human';
+    }
+    
+    if (playOption === 1) {
+        AImove(grids);
+    } else if (playOption === 2) {
+        playerA = false;
+    }
+}
+
 function main() {
     requestAnimationFrame(main);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+    if (playOption === null) {
+        renderPlayOption(ctx);
+        selectOption();
+        return;
+    }
 
     if (winner) {
         renderGameOver(ctx, winner);

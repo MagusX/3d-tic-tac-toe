@@ -49,7 +49,7 @@ const undoMove = (grid) => {
 const evaluate = (grids, moveCount) => {
     let aiMoves = 0;
     let humanMoves = 0;
-    if (moveCount === 0) return {_winner: 'Draw', aiMoves, humanMoves};
+    if (moveCount === 0) return {_winner: 'draw', aiMoves, humanMoves};
     for (const move of gameoverMoves) {
         const [ pos1, pos2, pos3 ] = move;
         const g1 = grids[pos1];
@@ -63,9 +63,9 @@ const evaluate = (grids, moveCount) => {
         }
 
         if (moveSum === 3) { // player 1 wins
-            return {_winner: 'B', aiMoves, humanMoves};
+            return {_winner: 'player2', aiMoves, humanMoves};
         } else if (moveSum === -3) { // player -1 wins
-            return {_winner: 'A', aiMoves, humanMoves};;
+            return {_winner: 'player1', aiMoves, humanMoves};;
         }
     }
     return {_winner: null, aiMoves, humanMoves};
