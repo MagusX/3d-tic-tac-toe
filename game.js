@@ -15,7 +15,7 @@ const gameoverMoves = [
 
 const posInf = Number.POSITIVE_INFINITY;
 const negInf = Number.NEGATIVE_INFINITY;
-const intelligence = 2;
+const intelligence = 6;
 
 const validMoves = grids => {
     let moves = [];
@@ -59,6 +59,7 @@ const evaluate = (grids, moveCount) => {
         const g2 = grids[pos2];
         const g3 = grids[pos3];
         const moveSum = g1.player + g2.player + g3.player;
+        if (moveSum === 0) continue;
         if (moveSum < 0) {
             aiMoves++;
         } else if (moveSum > 0) {
@@ -110,15 +111,19 @@ const minimax = (grids, depth, isMaximizer, alpha, beta) => {
 const AImove = grids => {
     const { moves } = validMoves(grids);
     let maxScore = negInf;
+    let alpha = negInf;
+    let beta = posInf;
     let bestMove;
     for (const move of moves) {
         makeMove(grids[move], -1);
-        let score = minimax(grids, 0, false, negInf, posInf);
+        let score = minimax(grids, 0, false, alpha, beta);
         undoMove(grids[move]);
         if (score > maxScore) {
             maxScore = score;
             bestMove = move;
         }
+        alpha = Math.max(alpha, maxScore);
+        if (beta <= alpha) break;
     }
     makeMove(grids[bestMove], -1);
     grids[bestMove].markColor = 'rgb(231, 76, 60)'; // Bright green
