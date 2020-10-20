@@ -8,10 +8,12 @@ const distance = (mX, mY, gridX, gridY) => {
     return Math.sqrt(a * a + b * b);
 }
 
+// Mouse hover
 const hover = (ctx, grid) => {
     grid.renderHover(ctx, playerA);
 }
 
+// If mouse inside grid (target) ellipse
 const interact = (ctx, grids) => {
     for (let i = 0; i < grids.length; i++) {
         if (distance(mouseX, mouseY, grids[i].x, grids[i].y) < grids[i].height) {

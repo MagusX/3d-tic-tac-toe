@@ -3,14 +3,16 @@ Initialize 3D boards
 */
 
 const w = 100;
-const h = 10;
+const h = 20;
 let dist = 200;
+const initX = innerWidth / 2;
+const initY = innerHeight / 4;
 const white = 'rgb(255, 255, 255)';
 let grid0 = new Grid(0, 500, 200, w, h, white);
 let grid1 = new Grid(1, 500, 200, w, h, white);
 let grid2 = new Grid(2, 500, 200, w, h, white);
 let grid3 = new Grid(3, 500, 200, w, h, white);
-let grid4 = new Grid(4, 700, 200, w, h, white); // center
+let grid4 = new Grid(4, initX, initY, w, h, white); // center
 let grid5 = new Grid(5, 500, 200, w, h, white);
 let grid6 = new Grid(6, 500, 200, w, h, white);
 let grid7 = new Grid(7, 500, 200, w, h, white);
@@ -30,7 +32,7 @@ let grid18 = new Grid(18, 300, 200 + dist * 2, w, h, white, dist * 2);
 let grid19 = new Grid(19, 300, 200 + dist * 2, w, h, white, dist * 2);
 let grid20 = new Grid(20, 300, 200 + dist * 2, w, h, white, dist * 2);
 let grid21 = new Grid(21, 300, 200 + dist * 2, w, h, white, dist * 2);
-let grid22 = new Grid(22, 500, 200 + dist * 2, w, h, white, dist * 2); // center
+let grid22 = new Grid(22, 300, 200 + dist * 2, w, h, white, dist * 2); // center
 let grid23 = new Grid(23, 300, 200 + dist * 2, w, h, white, dist * 2);
 let grid24 = new Grid(24, 300, 200 + dist * 2, w, h, white, dist * 2);
 let grid25 = new Grid(25, 300, 200 + dist * 2, w, h, white, dist * 2);
@@ -51,22 +53,27 @@ grids.push(grid24);grids.push(grid25);grids.push(grid26);
 
 let vertexes = [];
 const renderBoards = (ctx, key) => {
+    // Attach to create top board
     grid4.attach({grid0, grid1, grid2, grid3, grid5, grid6, grid7, grid8});
 
+    // Top layer
     for (let i = 0; i < 9; i++) {
         grids[i].motionPersist();
         vertexes[i] = grids[i].getVertexes();
     }
 
+    // Clone top layer
     for (let i = 9; i < 27; i++) {
         grids[i].motionPersistClone(vertexes[i % 9]);
     }
 
+    // Render all (bottom -> top)
     for (let i = 26; i >= 0; i--) {
         grids[i].run(ctx, key);
     }
 }
 
+// Log grids to console (debug)
 const logGrids = () => {
     let str = '';
     for (let grid of grids) {

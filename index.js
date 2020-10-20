@@ -2,6 +2,7 @@
 Main
 */
 
+// javascript canvas for 2d drawing
 const canvas = document.querySelector('canvas');
 canvas.width = window.innerWidth - 20;
 canvas.height = window.innerHeight - 20;
@@ -78,6 +79,7 @@ canvas.addEventListener('click', e => {
 
 const keyboardControl = (ctx, key) => {
     if (key === 'id') {
+        renderSecret(ctx);
         for (let i = 0; i < 27; i++) {
             grids[i].renderId(ctx);
         }
@@ -95,6 +97,7 @@ let players = {
 let playerA = true; // AI first
 let winner = null;
 
+// Menu option
 const selectOption = () => {
     if (keypressed >= '0' && keypressed < '3') {
         playOption = parseInt(keypressed, 10);
@@ -112,6 +115,7 @@ const selectOption = () => {
     }
 }
 
+// Run animation loop
 function main() {
     requestAnimationFrame(main);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
@@ -131,4 +135,4 @@ function main() {
     renderLog(ctx);
 }
 
-main();
+main(); // Start program

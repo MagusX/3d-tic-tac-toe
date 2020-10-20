@@ -15,7 +15,7 @@ const gameoverMoves = [
 
 const posInf = Number.POSITIVE_INFINITY;
 const negInf = Number.NEGATIVE_INFINITY;
-const intelligence = 5;
+const intelligence = 2;
 
 const validMoves = grids => {
     let moves = [];
@@ -36,20 +36,23 @@ const validMoves = grids => {
     return { moves, count };
 }
 
+// Select grid
 const makeMove = (grid, player) => {
     grid.selected = true;
     grid.player = player;
 }
 
+// Undo select grid
 const undoMove = (grid) => {
     grid.selected = false;
     grid.player = 0;
 }
 
+// maximizer win moves - minimizer win moves
 const evaluate = (grids, moveCount) => {
     let aiMoves = 0;
     let humanMoves = 0;
-    if (moveCount === 0) return {_winner: 'draw', aiMoves, humanMoves};
+    if (moveCount === 0) return {_winner: 'draw', _score: aiMoves - humanMoves};
     for (const move of gameoverMoves) {
         const [ pos1, pos2, pos3 ] = move;
         const g1 = grids[pos1];
@@ -63,20 +66,20 @@ const evaluate = (grids, moveCount) => {
         }
 
         if (moveSum === 3) { // player 1 wins
-            return {_winner: 'player2', aiMoves, humanMoves};
+            return {_winner: 'player2', _score: aiMoves - humanMoves};
         } else if (moveSum === -3) { // player -1 wins
-            return {_winner: 'player1', aiMoves, humanMoves};;
+            return {_winner: 'player1', _score: aiMoves - humanMoves};;
         }
     }
-    return {_winner: null, aiMoves, humanMoves};
+    return {_winner: null, _score: aiMoves - humanMoves};
 }
 
 // AI minimax + alpha-beta
 const minimax = (grids, depth, isMaximizer, alpha, beta) => {
     const { moves, count } = validMoves(grids);
-    const { _winner, aiMoves, humanMoves } = evaluate(grids, count);
+    const { _winner, _score } = evaluate(grids, count);
     if (_winner || depth === intelligence) {
-        return aiMoves - humanMoves;
+        return _score;
     }
 
     if (isMaximizer) {
@@ -118,6 +121,6 @@ const AImove = grids => {
         }
     }
     makeMove(grids[bestMove], -1);
-    grids[bestMove].markColor = 'rgb(231, 76, 60)';
+    grids[bestMove].markColor = 'rgb(231, 76, 60)'; // Bright green
     playerA = false; // Human
 }

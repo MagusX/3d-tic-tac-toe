@@ -40,6 +40,7 @@ class Grid {
         this.opac = 1 - Math.floor(id / 9) / 5;
     }
 
+    // Up down view
     verticalRotate(key) {
         if (key === 'up' && this.height >= 0) {
             this.height -= this.verVel;
@@ -51,6 +52,7 @@ class Grid {
         }
     }
 
+    // Left right view
     horizontalRotate(key) {
         if (key == 'left') {
             this.angle += this.horVel;
@@ -64,6 +66,7 @@ class Grid {
         }
     }
 
+    // Persist 3D view
     motionPersist() {
         this.radiusCos0 = this.width * Math.cos(this.angle);
         this.radiusSin0 = this.height * Math.sin(this.angle);
@@ -83,9 +86,10 @@ class Grid {
         this.y3 = this.y - this.radiusSin1;
     }
 
+    // Attach 8 grids to center grid to create 1 board(layer)
     attach(grids) {
         let { grid0, grid1, grid2, grid3, grid5, grid6, grid7, grid8 } = grids;
-        // diagonals
+        // 4 diagonals
         grid0.x = this.x + this.radiusCos0 * 2;
         grid0.y = this.y + this.radiusSin0 * 2;
 
@@ -98,7 +102,7 @@ class Grid {
         grid6.x = this.x - this.radiusCos1 * 2;
         grid6.y = this.y - this.radiusSin1 * 2;
 
-        // straight
+        // 4 straight lines
         const straightRadius = Math.cos(this._deg45);
         const strtRP = straightRadius * Math.cos(this.angle + this._deg45);
         const strtRM = straightRadius * Math.cos(this.angle - this._deg45);
@@ -123,6 +127,7 @@ class Grid {
         grid5.y = this.y - radiusSin3 * 2;
     }
 
+    // Clone layer from top layer
     motionPersistClone(vertexes) {
         const { x, y, x0, y0, x1, y1, x2, y2, x3, y3 } = vertexes;
         
@@ -141,6 +146,7 @@ class Grid {
         this.y3 = y3 + this.layerOffset;
     }
 
+    // Get layer vertexes for cloning
     getVertexes() {
         return {
             x: this.x, y: this.y,
@@ -166,10 +172,11 @@ class Grid {
         ctx.beginPath();
         ctx.font = '15px Arial';
         ctx.fillStyle = 'white';
-        ctx.fillText(this.player, this.x, this.y);
+        ctx.fillText(`${this.id}(${this.player})`, this.x, this.y);
         ctx.closePath();
     }
 
+    // Grid select effect
     renderMark(ctx) {
         ctx.beginPath();
         ctx.fillStyle = this.markColor;
@@ -177,6 +184,7 @@ class Grid {
         ctx.fill();
     }
 
+    // Mouse hover effect
     renderHover(ctx, playerA) {
         if (this.selected) return;
         this.markColor = playerA ? `rgba(231, 76, 60, ${this.opac})` : `rgba(52, 152, 219, ${this.opac})`;
@@ -187,7 +195,6 @@ class Grid {
     run(ctx, key) {
         this.verticalRotate(key);
         this.horizontalRotate(key);
-        // this.renderId(ctx);
         this.render(ctx);
         this.outlineColor = 'rgb(255, 255, 255)';
         if (this.selected) {
