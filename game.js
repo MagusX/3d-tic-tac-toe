@@ -35,11 +35,10 @@ const validMoves = grids => {
     return { moves, count };
 }
 
-const evaluate = grids => {
+const evaluate = (grids, moveCount) => {
     let aiMoves = 0;
     let humanMoves = 0;
-    const { count } = validMoves(grids);
-    if (count === 0) return {_winner: 'Draw', aiMoves, humanMoves};
+    if (moveCount === 0) return {_winner: 'Draw', aiMoves, humanMoves};
     for (let i = 0; i < 49; i++) { //gameoverMoves.length = 49
         const [ pos1, pos2, pos3 ] = gameoverMoves[i];
         const g1 = grids[pos1];
@@ -61,16 +60,16 @@ const evaluate = grids => {
     return {_winner: null, aiMoves, humanMoves};
 }
 
-const intelligence = 4;
+const intelligence = 5;
 
 // AI minimax + alpha-beta
 const minimax = (grids, depth, isMaximizer, alpha, beta) => {
-    const { _winner, aiMoves, humanMoves } = evaluate(grids);
+    const { moves, count } = validMoves(grids);
+    const { _winner, aiMoves, humanMoves } = evaluate(grids, count);
     if (_winner || depth === intelligence) {
         return aiMoves - humanMoves;
     }
 
-    const { moves } = validMoves(grids);
     if (isMaximizer) {
         let maxScore = negInf;
         for (const move of moves) {
