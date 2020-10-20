@@ -62,29 +62,18 @@ canvas.addEventListener('click', e => {
         target.selected = true;
         target.player = 1;
         playerA = !playerA;
+        winner = gameOver(grids);
         if (playerA) {
             AImove(grids);
+            winner = gameOver(grids);
         }
         logGrids();
 
-        winner = gameOver(grids);
     }
 });
 
 
 const keyboardControl = (ctx, key) => {
-    // if (key === 'stretch') {
-    //     for (let i = 0; i < 27; i++) {
-    //         grids[i].layerOffset += 1;
-    //         if (grids[i].layerOffset )             
-    //     }
-    // } else if (key === 'zoom_out') {
-    //     for (let i = 0; i < 27; i++) {
-    //         if (grids[i].height >= 0) {
-    //             grids[i].layerOffset -= 1;
-    //         }
-    //     }
-    // } else 
     if (key === 'id') {
         for (let i = 0; i < 27; i++) {
             grids[i].renderId(ctx);

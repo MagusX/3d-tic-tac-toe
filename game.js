@@ -52,13 +52,29 @@ const scores = {
     Draw: 0
 }
 
-const intelligence = 6;
+// const isBlocked = () => {
 
-// AI minimax
+// }
+
+const evaluate = () => {
+    let AiMoves = 0;
+    let humanMoves = 0;
+    for (const move of gameoverMoves) {
+        for (const pos of move) {
+            if (grids[pos].player === 0) AiMoves++;
+            else if (grids[pos].player === 1) humanMoves++;
+        }
+    }
+    return AiMoves - humanMoves; 
+}
+
+const intelligence = 5;
+
+// AI minimax + alpha-beta pruning
 const minimax = (grids, depth, isMaximizer, alpha, beta) => {
     const _winner = gameOver(grids);
     if (_winner || depth === intelligence) {
-        return scores[_winner];
+        return evaluate();
     }
 
     const { moves, count } = validMoves(grids);
@@ -94,7 +110,7 @@ const minimax = (grids, depth, isMaximizer, alpha, beta) => {
 const AImove = grids => {
     const { moves, count } = validMoves(grids);
     let maxScore = negInf;
-    let bestMove = 13;
+    let bestMove;
     for (let move of moves) {
         grids[move].selected = true;
         grids[move].player = 0;
