@@ -15,6 +15,7 @@ const gameoverMoves = [
 
 const posInf = Number.POSITIVE_INFINITY;
 const negInf = Number.NEGATIVE_INFINITY;
+const intelligence = 5;
 
 const validMoves = grids => {
     let moves = [];
@@ -35,12 +36,22 @@ const validMoves = grids => {
     return { moves, count };
 }
 
+const makeMove = (grid, player) => {
+    grid.selected = true;
+    grid.player = player;
+}
+
+const undoMove = (grid) => {
+    grid.selected = false;
+    grid.player = 0;
+}
+
 const evaluate = (grids, moveCount) => {
     let aiMoves = 0;
     let humanMoves = 0;
     if (moveCount === 0) return {_winner: 'Draw', aiMoves, humanMoves};
-    for (let i = 0; i < 49; i++) { //gameoverMoves.length = 49
-        const [ pos1, pos2, pos3 ] = gameoverMoves[i];
+    for (const move of gameoverMoves) {
+        const [ pos1, pos2, pos3 ] = move;
         const g1 = grids[pos1];
         const g2 = grids[pos2];
         const g3 = grids[pos3];
@@ -60,8 +71,6 @@ const evaluate = (grids, moveCount) => {
     return {_winner: null, aiMoves, humanMoves};
 }
 
-const intelligence = 5;
-
 // AI minimax + alpha-beta
 const minimax = (grids, depth, isMaximizer, alpha, beta) => {
     const { moves, count } = validMoves(grids);
@@ -73,11 +82,9 @@ const minimax = (grids, depth, isMaximizer, alpha, beta) => {
     if (isMaximizer) {
         let maxScore = negInf;
         for (const move of moves) {
-            grids[move].selected = true;
-            grids[move].player = -1; // AI
+            makeMove(grids[move], -1); // AI
             let score = minimax(grids, depth + 1, false, alpha, beta);
-            grids[move].selected = false;
-            grids[move].player = 0;
+            undoMove(grids[move]);
             maxScore = score > maxScore ? score : maxScore;
             alpha = Math.max(alpha, maxScore);
             if (beta <= alpha) break;
@@ -86,11 +93,9 @@ const minimax = (grids, depth, isMaximizer, alpha, beta) => {
     } else {
         let minScore = posInf;
         for (const move of moves) {
-            grids[move].selected = true;
-            grids[move].player = 1; // human
+            makeMove(grids[move], 1); // human
             let score = minimax(grids, depth + 1, true, alpha, beta);
-            grids[move].selected = false;
-            grids[move].player = 0;
+            undoMove(grids[move]);
             minScore = score < minScore ? score : minScore;
             beta = Math.min(beta, minScore);
             if (beta <= alpha) break;
@@ -104,19 +109,15 @@ const AImove = grids => {
     let maxScore = negInf;
     let bestMove;
     for (const move of moves) {
-        grids[move].selected = true;
-        grids[move].player = -1;
+        makeMove(grids[move], -1);
         let score = minimax(grids, 0, false, negInf, posInf);
-        grids[move].selected = false;
-        grids[move].player = 0;
+        undoMove(grids[move]);
         if (score > maxScore) {
             maxScore = score;
             bestMove = move;
         }
     }
-    grids[bestMove].selected = true;
-    grids[bestMove].player = -1;
+    makeMove(grids[bestMove], -1);
     grids[bestMove].markColor = 'rgb(231, 76, 60)';
     playerA = false; // Human
-    popup = false;
 }

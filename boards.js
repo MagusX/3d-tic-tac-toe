@@ -63,7 +63,7 @@ const renderBoards = (ctx, key) => {
     }
 
     for (let i = 26; i >= 0; i--) {
-        grids[i].run(ctx, key, playerA);
+        grids[i].run(ctx, key);
     }
 }
 

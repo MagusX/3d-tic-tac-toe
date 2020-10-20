@@ -41,8 +41,3 @@ const renderLog = ctx => {
     white, 20, start + 110);
 
 }
-
-const renderAImsg = ctx => {
-    createText(ctx, logFont, 'AI calculating...', white, 10, 20);
-}
-

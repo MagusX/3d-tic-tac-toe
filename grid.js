@@ -151,12 +151,6 @@ class Grid {
         };
     }
 
-    renderCenter(ctx) {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, 1, 0, 2 * this._PI);
-        ctx.stroke();
-    }
-
     render(ctx) {
         ctx.beginPath();
         ctx.strokeStyle = this.outlineColor;
@@ -190,10 +184,9 @@ class Grid {
         this.renderMark(ctx, playerA);
     }
 
-    run(ctx, key, playerA) {
+    run(ctx, key) {
         this.verticalRotate(key);
         this.horizontalRotate(key);
-        // this.renderCenter(ctx);
         // this.renderId(ctx);
         this.render(ctx);
         this.outlineColor = 'rgb(255, 255, 255)';
