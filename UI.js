@@ -42,7 +42,7 @@ const renderGame = () => {
 }
 
 const renderAILog = () => { 
-    intelligence = document.getElementById('depth').value;
+    intelligence = parseInt(document.getElementById('depth').value, 10);
     pruning = document.getElementById('pruning').checked;
     const aiEl = document.getElementById('ai');
     aiEl.innerText = `AI:\n>Method: minimax\n>Depth: ${intelligence}\n>Pruning: ${pruning}`;
