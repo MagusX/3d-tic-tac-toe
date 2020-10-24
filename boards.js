@@ -2,12 +2,12 @@
 Initialize 3D boards
 */
 
-const w = 100;
+const w = 90;
 const h = 20;
-let dist = 200;
-const initX = innerWidth / 2;
+let dist = 220;
+const initX = innerWidth / 2 - 100;
 const initY = innerHeight / 4;
-const white = 'rgb(255, 255, 255)';
+const white = 'rgb(50, 50, 50)';
 let grid0 = new Grid(0, 500, 200, w, h, white);
 let grid1 = new Grid(1, 500, 200, w, h, white);
 let grid2 = new Grid(2, 500, 200, w, h, white);

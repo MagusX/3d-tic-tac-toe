@@ -3,7 +3,7 @@ Single 3D grid
 */
 
 class Grid {
-    constructor(id, x, y, width, height, outlineColor, layerOffset, horVel=0.02, verVel=1, clone=false) {
+    constructor(id, x, y, width, height, outlineColor='rgb(100,100,100)', layerOffset=0, horVel=0.02, verVel=1, clone=false) {
         this.id = id;
         this.x = x;
         this.y = y;
@@ -38,6 +38,7 @@ class Grid {
         this.selected = false;
         this.player = 0;
         this.opac = 1 - Math.floor(id / 9) / 5;
+        this.test = 2.5;
     }
 
     // Up down view
@@ -90,17 +91,17 @@ class Grid {
     attach(grids) {
         let { grid0, grid1, grid2, grid3, grid5, grid6, grid7, grid8 } = grids;
         // 4 diagonals
-        grid0.x = this.x + this.radiusCos0 * 2;
-        grid0.y = this.y + this.radiusSin0 * 2;
+        grid0.x = this.x + this.radiusCos0 * 2.4;
+        grid0.y = this.y + this.radiusSin0 * 2.4;
 
-        grid2.x = this.x + this.radiusCos1 * 2;
-        grid2.y = this.y + this.radiusSin1 * 2;
+        grid2.x = this.x + this.radiusCos1 * 2.4;
+        grid2.y = this.y + this.radiusSin1 * 2.4;
 
-        grid8.x = this.x - this.radiusCos0 * 2;
-        grid8.y = this.y - this.radiusSin0 * 2;
+        grid8.x = this.x - this.radiusCos0 * 2.4;
+        grid8.y = this.y - this.radiusSin0 * 2.4;
 
-        grid6.x = this.x - this.radiusCos1 * 2;
-        grid6.y = this.y - this.radiusSin1 * 2;
+        grid6.x = this.x - this.radiusCos1 * 2.4;
+        grid6.y = this.y - this.radiusSin1 * 2.4;
 
         // 4 straight lines
         const straightRadius = Math.cos(this._deg45);
@@ -114,17 +115,17 @@ class Grid {
         const radiusCos3 = this.width * strtRM;
         const radiusSin3 = this.height * -strtRP;
 
-        grid1.x = this.x + radiusCos2 * 2;
-        grid1.y = this.y + radiusSin2 * 2;
+        grid1.x = this.x + radiusCos2 * 2.4;
+        grid1.y = this.y + radiusSin2 * 2.4;
 
-        grid3.x = this.x + radiusCos3 * 2;
-        grid3.y = this.y + radiusSin3 * 2;
+        grid3.x = this.x + radiusCos3 * 2.4;
+        grid3.y = this.y + radiusSin3 * 2.4;
 
-        grid7.x = this.x - radiusCos2 * 2;
-        grid7.y = this.y - radiusSin2 * 2;
+        grid7.x = this.x - radiusCos2 * 2.4;
+        grid7.y = this.y - radiusSin2 * 2.4;
 
-        grid5.x = this.x - radiusCos3 * 2;
-        grid5.y = this.y - radiusSin3 * 2;
+        grid5.x = this.x - radiusCos3 * 2.4;
+        grid5.y = this.y - radiusSin3 * 2.4;
     }
 
     // Clone layer from top layer
@@ -158,14 +159,43 @@ class Grid {
     }
 
     render(ctx) {
+        const thickness = 7;
         ctx.beginPath();
-        ctx.strokeStyle = this.outlineColor;
+        ctx.moveTo(this.x0, this.y0 + thickness);
+        ctx.lineTo(this.x1, this.y1 + thickness);
+        ctx.lineTo(this.x2, this.y2 + thickness);
+        ctx.lineTo(this.x3, this.y3 + thickness);
+        ctx.lineTo(this.x0, this.y0 + thickness);
+
+        ctx.moveTo(this.x0, this.y0);
+        ctx.lineTo(this.x0, this.y0 + thickness);
+        ctx.moveTo(this.x1, this.y1);
+        ctx.lineTo(this.x1, this.y1 + thickness);
+        ctx.moveTo(this.x2, this.y2);
+        ctx.lineTo(this.x2, this.y2 + thickness);
+        ctx.moveTo(this.x3, this.y3);
+        ctx.lineTo(this.x3, this.y3 + thickness);
+
+        ctx.fillStyle = 'rgb(100,100,100)';
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "white";
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
         ctx.moveTo(this.x0, this.y0);
         ctx.lineTo(this.x1, this.y1);
         ctx.lineTo(this.x2, this.y2);
         ctx.lineTo(this.x3, this.y3);
         ctx.lineTo(this.x0, this.y0);
+
+        ctx.fillStyle = 'rgb(100,100,100)';
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "white";
         ctx.stroke();
+        ctx.closePath();
     }
 
     renderId(ctx) {

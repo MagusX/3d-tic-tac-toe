@@ -100,13 +100,15 @@ const selectOption = () => {
 function main() {
     requestAnimationFrame(main);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+    renderBoards(ctx, keypressed);
+    interact(ctx, grids);
+    keyboardControl(ctx, keypressed);
+
     if (winner) {
         renderGameOver(ctx, winner);
         renderWinIndicator(ctx, winMoves);
     }
-    renderBoards(ctx, keypressed);
-    interact(ctx, grids);
-    keyboardControl(ctx, keypressed);
     // renderLog(ctx);
 }
 
