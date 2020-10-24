@@ -140,7 +140,10 @@ const minimaxPruning = (grids, depth, isMaximizer, alpha, beta) => {
     }
 }
 
+let totalRuntime = 0;
+let turns = 0;
 const AImove = grids => {
+    const t0 = performance.now();
     const { moves } = validMoves(grids);
     let maxScore = negInf;
     let alpha = negInf;
@@ -162,7 +165,10 @@ const AImove = grids => {
         }
     }
     makeMove(grids[bestMove], -1);
+    totalRuntime += (performance.now() - t0);
     grids[bestMove].markLetter = 'x';
     grids[bestMove].markColor = `rgb(255,180,20)`; // red
     playerA = false; // Human
+    turns++;
+    renderAISpeed();
 }

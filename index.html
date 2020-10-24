@@ -41,7 +41,7 @@
                 position: absolute;
                 right: 0px;
                 top: 50px;
-                width: 200px;
+                width: 300px;
                 background-color: rgb(10, 10, 10, 0.5);
                 color: #90ebeb;
                 text-shadow: 0 0 5px #9cccff, 0 0 10px #007bff, 0 0 20px #007bff, 0 0 25px #007bff;
@@ -66,7 +66,7 @@
 
             <div id="config">
                 <label for="depth">Search depth</label>
-                <input type="number" id="depth" value="5" style="width: 60px;"><br>
+                <input type="number" id="depth" value="6" style="width: 60px;"><br>
                 <label for="pruning">Alpha-Beta pruning</label>
                 <input type="checkbox" id="pruning" checked>
             </div>
@@ -78,7 +78,8 @@
                     Mode: <span id="mode"></span>
                     <br/>
                     <br/>
-                    <div id="ai"></div>
+                    <span id="ai"></span><span id="runtime"></span>
+                    <br/>
                     <br/>
                     Rotate keys:
                     <div>

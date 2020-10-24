@@ -56,6 +56,11 @@ const renderAILog = () => {
     pruning = document.getElementById('pruning').checked;
     const aiEl = document.getElementById('ai');
     aiEl.innerText = `AI:\n>Method: minimax\n>Depth: ${intelligence}\n>Pruning: ${pruning}`;
+    intelligence--;
+}
+
+const renderAISpeed = () => {
+    document.getElementById('runtime').innerText = `\n>Avg runtime: ${(totalRuntime / turns).toFixed(2)} ms`
 }
 
 const modeEl = document.getElementById('mode');
