@@ -15,7 +15,8 @@ const gameoverMoves = [
 
 const posInf = Number.POSITIVE_INFINITY;
 const negInf = Number.NEGATIVE_INFINITY;
-const intelligence = 6;
+let intelligence = 5;
+let pruning = true;
 
 const validMoves = grids => {
     let moves = [];
@@ -75,8 +76,8 @@ const evaluate = (grids, moveCount) => {
     return {_winner: null, _score: aiMoves - humanMoves};
 }
 
-// AI minimax + alpha-beta
-const minimax = (grids, depth, isMaximizer, alpha, beta) => {
+// AI minimax
+const minimax = (grids, depth, isMaximizer) => {
     const { moves, count } = validMoves(grids);
     const { _winner, _score } = evaluate(grids, count);
     if (_winner || depth === intelligence) {
@@ -87,7 +88,35 @@ const minimax = (grids, depth, isMaximizer, alpha, beta) => {
         let maxScore = negInf;
         for (const move of moves) {
             makeMove(grids[move], -1); // AI
-            let score = minimax(grids, depth + 1, false, alpha, beta);
+            let score = minimax(grids, depth + 1, false);
+            undoMove(grids[move]);
+            maxScore = score > maxScore ? score : maxScore;
+        }
+        return maxScore;
+    } else {
+        let minScore = posInf;
+        for (const move of moves) {
+            makeMove(grids[move], 1); // human
+            let score = minimax(grids, depth + 1, true);
+            undoMove(grids[move]);
+            minScore = score < minScore ? score : minScore;
+        }
+        return minScore;
+    }
+}
+
+const minimaxPruning = (grids, depth, isMaximizer, alpha, beta) => {
+    const { moves, count } = validMoves(grids);
+    const { _winner, _score } = evaluate(grids, count);
+    if (_winner || depth === intelligence) {
+        return _score;
+    }
+
+    if (isMaximizer) {
+        let maxScore = negInf;
+        for (const move of moves) {
+            makeMove(grids[move], -1); // AI
+            let score = minimaxPruning(grids, depth + 1, false, alpha, beta);
             undoMove(grids[move]);
             maxScore = score > maxScore ? score : maxScore;
             alpha = Math.max(alpha, maxScore);
@@ -98,7 +127,7 @@ const minimax = (grids, depth, isMaximizer, alpha, beta) => {
         let minScore = posInf;
         for (const move of moves) {
             makeMove(grids[move], 1); // human
-            let score = minimax(grids, depth + 1, true, alpha, beta);
+            let score = minimaxPruning(grids, depth + 1, true, alpha, beta);
             undoMove(grids[move]);
             minScore = score < minScore ? score : minScore;
             beta = Math.min(beta, minScore);
@@ -116,14 +145,18 @@ const AImove = grids => {
     let bestMove;
     for (const move of moves) {
         makeMove(grids[move], -1);
-        let score = minimax(grids, 0, false, alpha, beta);
+        let score;
+        if (pruning) score = minimaxPruning(grids, 0, false, alpha, beta);
+        else score = minimax(grids, 0, false);
         undoMove(grids[move]);
         if (score > maxScore) {
             maxScore = score;
             bestMove = move;
         }
-        alpha = Math.max(alpha, maxScore);
-        if (beta <= alpha) break;
+        if (pruning) {
+            alpha = Math.max(alpha, maxScore);
+            if (beta <= alpha) break;
+        }
     }
     makeMove(grids[bestMove], -1);
     grids[bestMove].markColor = 'rgb(231, 76, 60)'; // Bright green

@@ -33,28 +33,6 @@ const renderSecret = ctx => {
     createText(ctx, secretFont, '18120185', white, innerWidth - 120, 30);
 }
 
-// Lelft side info
-// const renderLog = ctx => {
-//     const start = innerHeight / 4;
-//     if (playOption !== 0) {
-//         createText(ctx, logFont,
-//             `AI level / Minimax depth (>6 slow): ${intelligence}`,
-//             white, 10, start);
-//     }
-//     createText(ctx, logFont,
-//     'Keyboard:',
-//     white, 10, start + 50);
-//     createText(ctx, logFont,
-//     '[A / Arrow-left] [D / Arrow-right]: rotate left, right',
-//     white, 20, start + 70);
-//     createText(ctx, logFont,
-//     '[W / Arrow-up] [S / Arrow-down]: rotate up, down',
-//     white, 20, start + 90);
-//     createText(ctx, logFont,
-//     '[Shift]: grid details',
-//     white, 20, start + 110);
-// }
-
 const renderGame = () => {
     let menu = document.getElementsByClassName('main-menu')[0];
     let game = document.getElementsByClassName('game')[0];
@@ -63,18 +41,31 @@ const renderGame = () => {
     selectOption();
 }
 
+const renderAILog = () => { 
+    intelligence = document.getElementById('depth').value;
+    pruning = document.getElementById('pruning').checked;
+    const aiEl = document.getElementById('ai');
+    aiEl.innerText = `AI:\n>Method: minimax\n>Depth: ${intelligence}\n>Pruning: ${pruning}`;
+}
+
+const modeEl = document.getElementById('mode');
 const menuButtons = document.getElementsByClassName('menu');
 menuButtons[0].addEventListener('click', e => {
     playOption = 0;
+    modeEl.innerText = 'Human vs Human';
     renderGame();
 });
 
 menuButtons[1].addEventListener('click', e => {
     playOption = 2;
+    modeEl.innerText = 'Human vs AI';
+    renderAILog();
     renderGame();
 });
 
 menuButtons[2].addEventListener('click', e => {
     playOption = 1;
+    modeEl.innerText = 'AI vs Human';
+    renderAILog();
     renderGame();
 });

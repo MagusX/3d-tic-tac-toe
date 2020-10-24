@@ -37,17 +37,6 @@ window.addEventListener('keydown', e => {
         case 'Shift':
             keypressed = 'id';
             break;
-        // case '0':
-        //     keypressed = '0';
-        //     break;
-        // case '1': {
-        //     keypressed = '1';
-        //     alert('AI IS LOADING...');
-        //     break;
-        // }
-        // case '2':
-        //     keypressed = '2';
-        //     break;
     }
 });
  
@@ -73,7 +62,6 @@ canvas.addEventListener('click', e => {
             AImove(grids);
             winner = evaluate(grids)._winner;
         }
-        // logGrids();
     }
 });
 
@@ -98,11 +86,7 @@ let playerA = true; // AI first
 let winner = null;
 
 // Menu option
-const selectOption = () => {
-    // if (keypressed >= '0' && keypressed < '3') {
-    //     playOption = parseInt(keypressed, 10);
-    // }
-    
+const selectOption = () => {    
     if (playOption && playOption !== 0) {
         players['player1'] = 'AI';
         players['player2'] = 'Human';
@@ -126,7 +110,7 @@ function main() {
     renderBoards(ctx, keypressed);
     interact(ctx, grids);
     keyboardControl(ctx, keypressed);
-    renderLog(ctx);
+    // renderLog(ctx);
 }
 
 main(); // Start program

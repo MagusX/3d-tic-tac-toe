@@ -3,19 +3,54 @@
     <head>
         <meta charset="UTF-8"/>
         <title>Tic tac toe</title>
+        <style>
+            .game {font-family: 'Courier New', Courier, monospace;}
+            .main-menu {font-family: Arial, Helvetica, sans-serif;}
+            #game-menu {
+                position: absolute;
+                right: 0;
+                width: 200px;
+                color: white;
+            }
+            #w {
+                margin-left: 35px;
+            }
+        </style>
     </head>
-    <body style="font-family: Arial, Helvetica, sans-serif;">
+    <body>
         <div class="main-menu">
             <button class="menu" id="0">Human vs Human</button>
             <button class="menu" id="1">Human vs AI</button>
             <button class="menu" id="2">AI vs Human</button>
-        </div>
 
-        <div id="game-menu">
-            
+            <div id="config">
+                <input type="number" id="depth" value="5">
+                <label for="pruning">Search depth</label><br>
+                <input type="checkbox" id="pruning">
+                <label for="pruning">Alpha-Beta pruning</label><br>
+            </div>
         </div>
 
         <div class="game" hidden>
+            <div id="game-menu">
+                <div id="log">
+                    Mode: <span id="mode"></span>
+                    <br/>
+                    <br/>
+                    <div id="ai">
+
+                    </div>
+                    <br/>
+                    Rotate keys:
+                    <div>
+                        <img id="w" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABpklEQVRIie3Vv4riUBTH8e+9bAQtrCymsLCIGtZFE8i+g8/hKwzzFLvWuz6AfwobIVrZOWAxsRGcYgsV0qRSsBNhzxayyzBmd8hMMrDg6XI4/D45l3AD13qnUs8bIqJ83/8M5BMyDq7rPiil5Gnzw/OpxWJxq5T6khD6O/MO+Pq0pyPmakmif8uMgt+lrvA/q9vtMp/PAVgul4zHYwB836fX66UHe55Hv98HYDAY0G63ERGGwyGTySQ92LIsNpsNcN74cDgQhiHr9RrLstKDq9UqYRiy3W7Z7XZkMhlWqxVBEFCpVGLBFxfIS7CIMBqNqNVqiAjT6ZTT6ZT+xlprPM+j0WjgOA6z2QytNeVyOT04l8tRLBbZ7/fYto1t2xyPR0qlEtlsNhYc66jh/IEFQUC9XkdrjdY69jG/Cm61WjSbTfL588+r0+lQKBTSh03TxDTNP8+O48RG4X+5MlOFReRT0khU5gWslDomDUdlRm38I2k4KjNq48ekYaXU6kXYMIxvwH2C7r1hGN8vXiZqUkS07/sfgZs3oqHruo9KqZ9vzLnW6+sXlmyM8OgpoxUAAAAASUVORK5CYII=">
+                    </div>
+                    <img id="a" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABc0lEQVRIie3Uv2oCMRwH8O/vuNukyIFQbnMRru14Nzr4Dj6Cb1Buc3do9/YlnMQ3kISjcaxIcToEb5QuUpGkU4t/UmpiKhT8bgnh+7lfCAdccqbQ/oZSioQQKYArR8Z7kiQvRKS2N/39U+Px+J6IHhyhX50ZgMftPU9z7tYl+lOnDj5LLvDRGQwG6Pf71vDBqz4mq9UKvV4Pm80GrVYLYRgad1hNLITAer2GlBJ5nttU2MGcc0RRhEajAc65FWx11YwxpGmKSqWC4XAIKSU8z2wG44mLosB8PsdisUBRFFgul5hOp6Y15jDnHESEKIpQq9Xg+z4YY8aw8VUzxlCv19HtdgEAs9kMnHN0Op2/hdvtNqrV6vc6yzKUZWlaYw43m82ddRzHiOPYGP5/v0znsFLqzjWi6zyAiejDNazr1E385hrWdeomnriGiej1VzgIgicAI4fuKAiC54OP0Z1USnlCiBsA1yeiZZIkEyKSJ/ZcYp9PrE95ISEWG8YAAAAASUVORK5CYII=">
+                    <img id="s" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABkUlEQVRIie3VMYsaQRjG8f97ZNAqoCAEURu7JOUEtNDGRiy2stqvEVLa2CYsWEjSL2whLH4BsfHAImuZRVJuFWyEw8KAOFddOM4NySaz19w95cvs89sZhl14ziNFHg6MMRJF0TvgpSXjRmv9VUTM/eGLh6s2m817EfloCb3r/AB8uj+7Sln3xib6u840+FHy9OCLy/U3SZKExWIBQL/fp1qt5g8nSYLrujQaDQqFAr7vM5vNqFQqmXoyH/VqteJ4POJ5HtPplFqtxna7zVqTHW42mwBMJhMOhwO+79PpdPKHW60W4/GYOI5xHAfP8zifz/nD+/0erTXz+ZzRaEQQBCyXy/zhIAhwXZfT6USv10MpxW63ywxnvtWO4xCGIcPhEIBisUi3280frtfrhGHIer3GGEO73aZcLucPA5RKJQaDwb88+itP71t9ARtj3tpG0jovYBH5aRtO60zb8XfbcFpn2o5j27CIfPsjrJT6DFxbdK+VUl8uXiZtpTHmKoqi18Cr/0R/aK1jEcn+F3mOrdwChbR8eKfawwUAAAAASUVORK5CYII=">
+                    <img id="d" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABV0lEQVRIie3VsWrCQBgH8P9feiAInTvEKAcubSFLGhAyuvsCvkXpU9TZBgcHX8FXcEoTMIQ6NEsGh84FwS69ToKYKxI9s+h//Pju++UuRwJcU1G4X1BKMYqiJwC3hoxv13XfSard4s1+VxzHzyRfDaHbmS8Ahru1mqbvwST630wdXEkuDy5crkNZLBZIkgQk0W630e12IYQ4PxyGIcbjMTzPw3Q6RavVQhAEpfGjj3o0GmEymSBNU8xms9LrT3rHtm3DsiwkSVItDAD1eh3r9bp6eLPZoNFoVAtnWYbVagXHcUqvLX2rtxkMBsjzHL7vo9/vnx/u9XqQUoIkms0mOp0OyMJPzjwspYSUsjS0n8v7VhdgpdSjaUQ3swCT/DEN62bqdvxpGtbN1O14aRom+XEQFkK8AZgbdOdCiKDwMLpOpVQtiqJ7AHcnol+u6y5J/p4455rj8wf8jVv/sRsGvgAAAABJRU5ErkJggg==">
+                </div>
+            </div>
+
             <canvas></canvas>
             <script src="game.js"></script>
             <script src="UI.js"></script>
@@ -24,16 +59,5 @@
             <script src="boards.js"></script>
             <script src="index.js"></script>
         </div>
-
-        <!-- <script>
-            (function() {
-                
-                setInterval(() => {
-                    let test = document.getElementById('test');
-                    test.innerText = i;
-                    i++; 
-                }, 1000);
-            })();
-        </script> -->
     </body>
 </html>
