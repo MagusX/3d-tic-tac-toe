@@ -4,8 +4,8 @@ Main
 
 // javascript canvas for 2d drawing
 const canvas = document.querySelector('canvas');
-canvas.width = window.innerWidth - 20;
-canvas.height = window.innerHeight - 20;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight - 5;
 canvas.style.backgroundColor = 'rgb(5,5,5)';
 const ctx = canvas.getContext('2d');
 
@@ -51,7 +51,6 @@ canvas.addEventListener('mousemove', e => {
 canvas.addEventListener('click', e => {
     if (winner) return;
     if (onTarget) {
-        console.log(playerA);
         makeMove(target, playerA ? -1 : 1);
         winner = evaluate(grids)._winner;
         playerA = !playerA;

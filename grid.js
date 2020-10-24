@@ -3,13 +3,15 @@ Single 3D grid
 */
 
 class Grid {
-    constructor(id, x, y, width, height, outlineColor='rgb(100,100,100)', layerOffset=0, horVel=0.02, verVel=1, clone=false) {
+    constructor(id, x, y, width, height, fillColor='rgb(60, 60, 60)', layerOffset=0, horVel=0.02, verVel=1, clone=false) {
         this.id = id;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.outlineColor = outlineColor;
+        this.opac = 1 - Math.floor(id / 9) / 9;
+        this.fillColor = `rgba(60, 60, 60, ${this.opac})`;
+        this.outlineColor = `rgba(150,150,150, ${this.opac})`;
         this.widthOffset = 20;
         this.heightOffset = 10;
         this.horVel = horVel;
@@ -17,6 +19,8 @@ class Grid {
         this.angle = 0;
         this.layerOffset = layerOffset;
         this.clone = clone;
+        this.markColor = '';
+        this.markLetter = '';
 
         this.x0 = x - width + this.widthOffset;
         this.y0 = y - this.heightOffset + layerOffset;
@@ -37,8 +41,6 @@ class Grid {
 
         this.selected = false;
         this.player = 0;
-        this.opac = 1 - Math.floor(id / 9) / 5;
-        this.test = 2.5;
     }
 
     // Up down view
@@ -176,10 +178,10 @@ class Grid {
         ctx.moveTo(this.x3, this.y3);
         ctx.lineTo(this.x3, this.y3 + thickness);
 
-        ctx.fillStyle = 'rgb(100,100,100)';
+        ctx.fillStyle = this.fillColor;
         ctx.fill();
         ctx.lineWidth = 3;
-        ctx.strokeStyle = "white";
+        ctx.strokeStyle = this.outlineColor;
         ctx.stroke();
         ctx.closePath();
 
@@ -190,10 +192,10 @@ class Grid {
         ctx.lineTo(this.x3, this.y3);
         ctx.lineTo(this.x0, this.y0);
 
-        ctx.fillStyle = 'rgb(100,100,100)';
+        ctx.fillStyle = this.fillColor;
         ctx.fill();
         ctx.lineWidth = 2;
-        ctx.strokeStyle = "white";
+        ctx.strokeStyle = this.outlineColor;
         ctx.stroke();
         ctx.closePath();
     }
@@ -209,24 +211,39 @@ class Grid {
     // Grid select effect
     renderMark(ctx) {
         ctx.beginPath();
-        ctx.fillStyle = this.markColor;
-        ctx.arc(this.x, this.y, this.height / Math.sqrt(2), 0, 2 * this._PI);
-        ctx.fill();
+        ctx.strokeStyle = this.markColor;
+        ctx.lineWidth = 5;
+        if (this.markLetter === 'o') {
+            ctx.ellipse(this.x, this.y, this.width / Math.sqrt(2), this.height / Math.sqrt(2), 0, 0, 2 * this._PI);
+        } else if (this.markLetter === 'x') {
+            ctx.moveTo(this.x0, this.y0);
+            ctx.lineTo(this.x2, this.y2);
+            ctx.moveTo(this.x1, this.y1);
+            ctx.lineTo(this.x3, this.y3);
+        }
+        ctx.stroke();
+        ctx.closePath();
     }
 
     // Mouse hover effect
     renderHover(ctx, playerA) {
         if (this.selected) return;
-        this.markColor = playerA ? `rgba(231, 76, 60, ${this.opac})` : `rgba(52, 152, 219, ${this.opac})`;
-        this.outlineColor = '#32ff7e';
-        this.renderMark(ctx, playerA);
+        if (playerA) {
+            this.markLetter = 'x';
+            this.markColor = `rgba(255,180,20, ${this.opac})`;
+        } else {
+            this.markLetter = 'o';
+            this.markColor = `rgba(144,235,235, ${this.opac})`;
+        }
+        this.outlineColor = 'white';
+        this.renderMark(ctx);
     }
 
     run(ctx, key) {
         this.verticalRotate(key);
         this.horizontalRotate(key);
         this.render(ctx);
-        this.outlineColor = 'rgb(255, 255, 255)';
+        this.outlineColor = 'rgb(150,150,150)';
         if (this.selected) {
             this.renderMark(ctx);
         }

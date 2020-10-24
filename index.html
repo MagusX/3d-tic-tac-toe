@@ -4,30 +4,72 @@
         <meta charset="UTF-8"/>
         <title>Tic tac toe</title>
         <style>
+            body {background: black;margin:0px;}
             .game {font-family: 'Courier New', Courier, monospace;}
-            .main-menu {font-family: Arial, Helvetica, sans-serif;}
+            .main-menu, #config {
+                font-family: Arial, Helvetica, sans-serif;
+                text-align: center;
+                margin-top: 100px;
+            }
+            button {
+                /* background-color: grey; */
+                background-color: rgb(10, 10, 10, 0.5);
+                color: #90ebeb;
+                text-shadow: 0 0 5px #9cccff, 0 0 10px #007bff, 0 0 20px #007bff, 0 0 25px #007bff;
+            }
+            #config > input {
+                border: 1px solid #fcf162;
+                box-shadow: 0px 0px 21px 1px #fd6f1b;
+                background-color: rgba(0,0,0,0.6);
+                color: #fcf162;
+                text-shadow: 0 0 5px #ffe3d3, 0 0 10px #fd6f1b, 0 0 20px #fd6f1b, 0 0 25px #fd6f1b;
+            }
+            #config > label {
+                color: #fcf162;
+                text-shadow: 0 0 5px #ffe3d3, 0 0 10px #fd6f1b, 0 0 20px #fd6f1b, 0 0 25px #fd6f1b;
+            }
+            .menu {
+                padding: 20px;
+                width: 200px;
+                margin: 10px;
+                font-size: larger;
+            }
+            #config {
+                margin-top: 10px;
+                font-size: larger;
+            }
             #game-menu {
                 position: absolute;
-                right: 0;
+                right: 0px;
+                top: 50px;
                 width: 200px;
-                color: white;
+                background-color: rgb(10, 10, 10, 0.5);
+                color: #90ebeb;
+                text-shadow: 0 0 5px #9cccff, 0 0 10px #007bff, 0 0 20px #007bff, 0 0 25px #007bff;
+            }
+            button:hover {
+                border: 1px solid #90ebeb;
+                box-shadow: 0px 0px 21px 1px rgba(0,140,255,1);
+                background-color: rgba(0,0,0,0.6);
+                color: #90ebeb;
+                text-shadow: 0 0 5px #9cccff, 0 0 10px #007bff, 0 0 20px #007bff, 0 0 25px #007bff;
             }
             #w {
-                margin-left: 35px;
+                margin-left: 40px;
             }
         </style>
     </head>
     <body>
         <div class="main-menu">
-            <button class="menu" id="0">Human vs Human</button>
-            <button class="menu" id="1">Human vs AI</button>
+            <button class="menu" id="0">Human vs Human</button><br>
+            <button class="menu" id="1">Human vs AI</button><br>
             <button class="menu" id="2">AI vs Human</button>
 
             <div id="config">
-                <input type="number" id="depth" value="5">
-                <label for="pruning">Search depth</label><br>
+                <label for="depth">Search depth</label>
+                <input type="number" id="depth" value="5" style="width: 60px;"><br>
+                <label for="pruning">Alpha-Beta pruning</label>
                 <input type="checkbox" id="pruning">
-                <label for="pruning">Alpha-Beta pruning</label><br>
             </div>
         </div>
 
@@ -37,9 +79,7 @@
                     Mode: <span id="mode"></span>
                     <br/>
                     <br/>
-                    <div id="ai">
-
-                    </div>
+                    <div id="ai"></div>
                     <br/>
                     Rotate keys:
                     <div>

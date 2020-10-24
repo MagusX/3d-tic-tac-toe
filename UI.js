@@ -23,13 +23,14 @@ const renderGameOver = (ctx, _winner) => {
     createText(
         ctx, titleFont,
         display,
-        _winner === 'player1' ? `rgb(231, 76, 60)` : `rgb(52, 152, 219)`,
+        _winner === 'player1' ? `rgb(255,180,20)` : `rgb(144,235,235)`,
         10, 50
     );
 }
 
 const renderWinIndicator = (ctx, move) => {
     ctx.beginPath();
+    ctx.strokeStyle = 'white';
     ctx.moveTo(move[0].x, move[0].y);
     ctx.lineTo(move[1].x, move[1].y);
     ctx.stroke();

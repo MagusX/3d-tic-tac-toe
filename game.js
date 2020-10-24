@@ -162,6 +162,7 @@ const AImove = grids => {
         }
     }
     makeMove(grids[bestMove], -1);
-    grids[bestMove].markColor = 'rgb(231, 76, 60)'; // Bright green
+    grids[bestMove].markLetter = 'x';
+    grids[bestMove].markColor = `rgb(255,180,20)`; // red
     playerA = false; // Human
 }
