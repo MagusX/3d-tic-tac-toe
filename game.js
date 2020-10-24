@@ -49,6 +49,7 @@ const undoMove = (grid) => {
     grid.player = 0;
 }
 
+let winMoves;
 // maximizer win moves - minimizer win moves
 const evaluate = (grids, moveCount) => {
     let aiMoves = 0;
@@ -68,8 +69,10 @@ const evaluate = (grids, moveCount) => {
         }
 
         if (moveSum === 3) { // player 1 wins
+            winMoves = [g1, g3];
             return {_winner: 'player2', _score: aiMoves - humanMoves};
         } else if (moveSum === -3) { // player -1 wins
+            winMoves = [g1, g3];
             return {_winner: 'player1', _score: aiMoves - humanMoves};;
         }
     }

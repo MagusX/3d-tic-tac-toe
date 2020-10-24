@@ -16,7 +16,6 @@ let onTarget = false;
 let target = null;
 
 window.addEventListener('keydown', e => {
-    if (winner) return;
     switch (e.key) {
         case 'w':
         case 'ArrowUp':
@@ -41,12 +40,10 @@ window.addEventListener('keydown', e => {
 });
  
 window.addEventListener('keyup', e => {
-    if (winner) return;
     keypressed = '';
 });
 
 canvas.addEventListener('mousemove', e => {
-    if (winner) return;
     mouseX = e.offsetX;
     mouseY = e.offsetY;
 });
@@ -103,9 +100,9 @@ const selectOption = () => {
 function main() {
     requestAnimationFrame(main);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
-
     if (winner) {
         renderGameOver(ctx, winner);
+        renderWinIndicator(ctx, winMoves);
     }
     renderBoards(ctx, keypressed);
     interact(ctx, grids);

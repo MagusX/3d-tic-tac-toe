@@ -28,6 +28,14 @@ const renderGameOver = (ctx, _winner) => {
     );
 }
 
+const renderWinIndicator = (ctx, move) => {
+    ctx.beginPath();
+    ctx.moveTo(move[0].x, move[0].y);
+    ctx.lineTo(move[1].x, move[1].y);
+    ctx.stroke();
+    ctx.closePath();
+}
+
 // Secret :)
 const renderSecret = ctx => {
     createText(ctx, secretFont, '18120185', white, innerWidth - 120, 30);
