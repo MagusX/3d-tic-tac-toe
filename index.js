@@ -37,17 +37,17 @@ window.addEventListener('keydown', e => {
         case 'Shift':
             keypressed = 'id';
             break;
-        case '0':
-            keypressed = '0';
-            break;
-        case '1': {
-            keypressed = '1';
-            alert('AI IS LOADING...');
-            break;
-        }
-        case '2':
-            keypressed = '2';
-            break;
+        // case '0':
+        //     keypressed = '0';
+        //     break;
+        // case '1': {
+        //     keypressed = '1';
+        //     alert('AI IS LOADING...');
+        //     break;
+        // }
+        // case '2':
+        //     keypressed = '2';
+        //     break;
     }
 });
  
@@ -99,9 +99,9 @@ let winner = null;
 
 // Menu option
 const selectOption = () => {
-    if (keypressed >= '0' && keypressed < '3') {
-        playOption = parseInt(keypressed, 10);
-    }
+    // if (keypressed >= '0' && keypressed < '3') {
+    //     playOption = parseInt(keypressed, 10);
+    // }
     
     if (playOption && playOption !== 0) {
         players['player1'] = 'AI';
@@ -119,12 +119,6 @@ const selectOption = () => {
 function main() {
     requestAnimationFrame(main);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
-
-    if (playOption === null) {
-        renderPlayOption(ctx);
-        selectOption();
-        return;
-    }
 
     if (winner) {
         renderGameOver(ctx, winner);

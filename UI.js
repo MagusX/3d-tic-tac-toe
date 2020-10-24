@@ -34,34 +34,47 @@ const renderSecret = ctx => {
 }
 
 // Lelft side info
-const renderLog = ctx => {
-    const start = innerHeight / 4;
-    if (playOption !== 0) {
-        createText(ctx, logFont,
-            `AI level / Minimax depth (>6 slow): ${intelligence}`,
-            white, 10, start);
-    }
-    createText(ctx, logFont,
-    'Keyboard:',
-    white, 10, start + 50);
-    createText(ctx, logFont,
-    '[A / Arrow-left] [D / Arrow-right]: rotate left, right',
-    white, 20, start + 70);
-    createText(ctx, logFont,
-    '[W / Arrow-up] [S / Arrow-down]: rotate up, down',
-    white, 20, start + 90);
-    createText(ctx, logFont,
-    '[Shift]: grid details',
-    white, 20, start + 110);
+// const renderLog = ctx => {
+//     const start = innerHeight / 4;
+//     if (playOption !== 0) {
+//         createText(ctx, logFont,
+//             `AI level / Minimax depth (>6 slow): ${intelligence}`,
+//             white, 10, start);
+//     }
+//     createText(ctx, logFont,
+//     'Keyboard:',
+//     white, 10, start + 50);
+//     createText(ctx, logFont,
+//     '[A / Arrow-left] [D / Arrow-right]: rotate left, right',
+//     white, 20, start + 70);
+//     createText(ctx, logFont,
+//     '[W / Arrow-up] [S / Arrow-down]: rotate up, down',
+//     white, 20, start + 90);
+//     createText(ctx, logFont,
+//     '[Shift]: grid details',
+//     white, 20, start + 110);
+// }
+
+const renderGame = () => {
+    let menu = document.getElementsByClassName('main-menu')[0];
+    let game = document.getElementsByClassName('game')[0];
+    menu.setAttribute('hidden', 'true');
+    game.removeAttribute('hidden');
+    selectOption();
 }
 
-// Player options menu
-const renderPlayOption = ctx => {
-    createText(ctx, titleFont,
-        'Human vs Human: Press 0', white, 500, 100);
-    createText(ctx, titleFont,
-        'Human vs AI (AI first): Press 1', white, 500, 150);
-    createText(ctx, titleFont,
-        'Human vs AI (Human first): Press 2', white, 500, 200);
-}
+const menuButtons = document.getElementsByClassName('menu');
+menuButtons[0].addEventListener('click', e => {
+    playOption = 0;
+    renderGame();
+});
 
+menuButtons[1].addEventListener('click', e => {
+    playOption = 2;
+    renderGame();
+});
+
+menuButtons[2].addEventListener('click', e => {
+    playOption = 1;
+    renderGame();
+});

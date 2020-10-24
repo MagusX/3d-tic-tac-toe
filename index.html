@@ -4,13 +4,36 @@
         <meta charset="UTF-8"/>
         <title>Tic tac toe</title>
     </head>
-    <body>
-        <canvas></canvas>
-        <script src="game.js"></script>
-        <script src="UI.js"></script>
-        <script src="grid.js"></script>
-        <script src="mouse.js"></script>
-        <script src="boards.js"></script>
-        <script src="index.js"></script>
+    <body style="font-family: Arial, Helvetica, sans-serif;">
+        <div class="main-menu">
+            <button class="menu" id="0">Human vs Human</button>
+            <button class="menu" id="1">Human vs AI</button>
+            <button class="menu" id="2">AI vs Human</button>
+        </div>
+
+        <div id="game-menu">
+            
+        </div>
+
+        <div class="game" hidden>
+            <canvas></canvas>
+            <script src="game.js"></script>
+            <script src="UI.js"></script>
+            <script src="grid.js"></script>
+            <script src="mouse.js"></script>
+            <script src="boards.js"></script>
+            <script src="index.js"></script>
+        </div>
+
+        <!-- <script>
+            (function() {
+                
+                setInterval(() => {
+                    let test = document.getElementById('test');
+                    test.innerText = i;
+                    i++; 
+                }, 1000);
+            })();
+        </script> -->
     </body>
 </html>
