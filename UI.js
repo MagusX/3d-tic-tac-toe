@@ -31,6 +31,7 @@ const renderGameOver = (ctx, _winner) => {
 const renderWinIndicator = (ctx, move) => {
     ctx.beginPath();
     ctx.strokeStyle = 'white';
+    ctx.lineWidth = 5;
     ctx.moveTo(move[0].x, move[0].y);
     ctx.lineTo(move[1].x, move[1].y);
     ctx.stroke();
