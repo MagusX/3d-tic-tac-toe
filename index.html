@@ -70,6 +70,14 @@
                 <label for="pruning">Alpha-Beta pruning</label>
                 <input type="checkbox" id="pruning" checked>
             </div>
+
+            <div style="margin-top: 100px; color: white;">
+                <div>GUIDE</div>
+                <div>Search depth: Minimax recursion depth</div>
+                <div>Pruning ON: 1-7 recommended (>7 slow)</div>
+                <div>Pruning OFF: 1-5 recommended (>5 very slow)</div>
+                <div>Alpha-Beta pruning: Apply pruning for Minimax? Yes (Default)</div><br>
+            </div>
         </div>
 
         <div class="game" hidden>
@@ -88,6 +96,10 @@
                     <img id="a" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABc0lEQVRIie3Uv2oCMRwH8O/vuNukyIFQbnMRru14Nzr4Dj6Cb1Buc3do9/YlnMQ3kISjcaxIcToEb5QuUpGkU4t/UmpiKhT8bgnh+7lfCAdccqbQ/oZSioQQKYArR8Z7kiQvRKS2N/39U+Px+J6IHhyhX50ZgMftPU9z7tYl+lOnDj5LLvDRGQwG6Pf71vDBqz4mq9UKvV4Pm80GrVYLYRgad1hNLITAer2GlBJ5nttU2MGcc0RRhEajAc65FWx11YwxpGmKSqWC4XAIKSU8z2wG44mLosB8PsdisUBRFFgul5hOp6Y15jDnHESEKIpQq9Xg+z4YY8aw8VUzxlCv19HtdgEAs9kMnHN0Op2/hdvtNqrV6vc6yzKUZWlaYw43m82ddRzHiOPYGP5/v0znsFLqzjWi6zyAiejDNazr1E385hrWdeomnriGiej1VzgIgicAI4fuKAiC54OP0Z1USnlCiBsA1yeiZZIkEyKSJ/ZcYp9PrE95ISEWG8YAAAAASUVORK5CYII=">
                     <img id="s" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABkUlEQVRIie3VMYsaQRjG8f97ZNAqoCAEURu7JOUEtNDGRiy2stqvEVLa2CYsWEjSL2whLH4BsfHAImuZRVJuFWyEw8KAOFddOM4NySaz19w95cvs89sZhl14ziNFHg6MMRJF0TvgpSXjRmv9VUTM/eGLh6s2m817EfloCb3r/AB8uj+7Sln3xib6u840+FHy9OCLy/U3SZKExWIBQL/fp1qt5g8nSYLrujQaDQqFAr7vM5vNqFQqmXoyH/VqteJ4POJ5HtPplFqtxna7zVqTHW42mwBMJhMOhwO+79PpdPKHW60W4/GYOI5xHAfP8zifz/nD+/0erTXz+ZzRaEQQBCyXy/zhIAhwXZfT6USv10MpxW63ywxnvtWO4xCGIcPhEIBisUi3280frtfrhGHIer3GGEO73aZcLucPA5RKJQaDwb88+itP71t9ARtj3tpG0jovYBH5aRtO60zb8XfbcFpn2o5j27CIfPsjrJT6DFxbdK+VUl8uXiZtpTHmKoqi18Cr/0R/aK1jEcn+F3mOrdwChbR8eKfawwUAAAAASUVORK5CYII=">
                     <img id="d" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABV0lEQVRIie3VsWrCQBgH8P9feiAInTvEKAcubSFLGhAyuvsCvkXpU9TZBgcHX8FXcEoTMIQ6NEsGh84FwS69ToKYKxI9s+h//Pju++UuRwJcU1G4X1BKMYqiJwC3hoxv13XfSard4s1+VxzHzyRfDaHbmS8Ahru1mqbvwST630wdXEkuDy5crkNZLBZIkgQk0W630e12IYQ4PxyGIcbjMTzPw3Q6RavVQhAEpfGjj3o0GmEymSBNU8xms9LrT3rHtm3DsiwkSVItDAD1eh3r9bp6eLPZoNFoVAtnWYbVagXHcUqvLX2rtxkMBsjzHL7vo9/vnx/u9XqQUoIkms0mOp0OyMJPzjwspYSUsjS0n8v7VhdgpdSjaUQ3swCT/DEN62bqdvxpGtbN1O14aRom+XEQFkK8AZgbdOdCiKDwMLpOpVQtiqJ7AHcnol+u6y5J/p4455rj8wf8jVv/sRsGvgAAAABJRU5ErkJggg==">
+                    <div>*Please turn off UniKey</div>
+                </div>
+                <div id="ai-desc" style="margin-top: 100px;" hidden>
+                    <div>*Avg runtime: Meassure Minimax average runtime (miliseconds) after every AI turn</div>
                 </div>
             </div>
 

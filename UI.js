@@ -52,6 +52,7 @@ const renderGame = () => {
 }
 
 const renderAILog = () => { 
+    document.getElementById('ai-desc').removeAttribute('hidden');
     intelligence = parseInt(document.getElementById('depth').value, 10);
     pruning = document.getElementById('pruning').checked;
     const aiEl = document.getElementById('ai');
@@ -60,7 +61,8 @@ const renderAILog = () => {
 }
 
 const renderAISpeed = () => {
-    document.getElementById('runtime').innerText = `\n>Avg runtime: ${(totalRuntime / turns).toFixed(2)} ms`
+    const time = turns === 0 ? 0 : (totalRuntime / turns).toFixed(2);
+    document.getElementById('runtime').innerText = `\n>Avg runtime: ${time} ms`
 }
 
 const modeEl = document.getElementById('mode');

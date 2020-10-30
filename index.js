@@ -91,6 +91,7 @@ const selectOption = () => {
     if (playOption === 1) {
         AImove(grids);
     } else if (playOption === 2) {
+        renderAISpeed();
         playerA = false;
     }
 }
