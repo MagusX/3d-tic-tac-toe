@@ -54,7 +54,9 @@ canvas.addEventListener('click', e => {
         makeMove(target, playerA ? -1 : 1);
         winner = evaluate(grids)._winner;
         playerA = !playerA;
-        if ((playOption === 1 || playOption === 2) && playerA) {
+        onTarget = false;
+        target = null;
+        if ((playOption !== 0) && playerA) {
             AImove(grids);
             winner = evaluate(grids)._winner;
         }
