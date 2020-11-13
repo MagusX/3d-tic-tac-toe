@@ -62,9 +62,9 @@ const evaluate = (grids, moveCount) => {
         const g3 = grids[pos3];
         const moveSum = g1.player + g2.player + g3.player;
         if (moveSum === 0) continue;
-        if (moveSum < 0) {
+        if (g1.player != 1 && g2.player != 1 && g3.player != 1) {
             aiMoves++;
-        } else if (moveSum > 0) {
+        } else if (g1.player != -1 && g2.player != -1 && g3.player != -1) {
             humanMoves++;
         }
 
